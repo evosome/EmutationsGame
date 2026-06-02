@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { formatSeed } from '$lib/generator';
+  import { formatSeed } from '$utils/index';
 
   interface GenFieldProps {
     placeholder?: string;

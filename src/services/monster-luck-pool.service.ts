@@ -1,11 +1,8 @@
-import type { EmutationMonster, EmutationRarity } from "./types";
-import { EmutationRarity as Rarity } from "./types";
-import {
-  generateRandomSeed,
-  generateMonster,
-  calculatePrice,
-  formatSeed,
-} from "./generator";
+import type { EmutationMonster, EmutationRarity } from "$types/index";
+import { EmutationRarity as Rarity } from "$types/index";
+import { generateMonster } from "./monster-generation.service";
+import { calculatePrice } from "./price.service";
+import { formatSeed, generateRandomSeed } from "$utils/formatting";
 
 /**
  * Pool entry containing a monster and its metadata
@@ -48,7 +45,7 @@ const DEFAULT_RARITY_WEIGHTS: Record<EmutationRarity, number> = {
   [Rarity.NONEXISTING]: 5, // Extremely rare
 };
 
-const DEFAULT_POOL_SIZE = 1000;
+const DEFAULT_POOL_SIZE = 256;
 
 /**
  * Monster Pool class - manages a pool of pre-generated monster seeds
@@ -124,7 +121,7 @@ class MonsterPool {
       idx = (idx + 1) % 10;
     }
 
-    // Generate monsters for each rarity tier
+    console.log(`Generating monsters for each rarity...`);
     for (let r = 0; r <= 9; r++) {
       const rarity = r as EmutationRarity;
       const count = rarityCounts[rarity] || 0;
@@ -135,6 +132,8 @@ class MonsterPool {
           entries.push(entry);
         }
       }
+
+      console.log('');
     }
 
     return entries;
@@ -148,13 +147,15 @@ class MonsterPool {
     targetRarity: EmutationRarity,
   ): PoolEntry | null {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const maxAttempts = 5000;
+    const maxAttempts = 2500;
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
       let seed = "";
       for (let i = 0; i < 12; i++) {
         seed += chars.charAt(Math.floor(Math.random() * chars.length));
       }
+
+      console.log(` ->> Attempt no ${attempt}. Selected seed = ${seed}`)
 
       const monster = generateMonster(formatSeed(seed));
       const rarity = monster.rarity;
@@ -393,9 +394,9 @@ export function initializeMonsterPool(
  * Get a monster from the pool based on current luck
  * This replaces the brute-force approach in generateRandomSeedWithLuck
  */
-export function getMonsterFromPool(
+export function getMonsterWithLuck(
   luck: number = 0,
-): { seed: string; monster: EmutationMonster } | null {
+): EmutationMonster | null {
   const pool = getMonsterPool();
   const entry = pool.getMonster(luck);
 
@@ -403,10 +404,7 @@ export function getMonsterFromPool(
     return null;
   }
 
-  return {
-    seed: entry.seed,
-    monster: entry.monster,
-  };
+  return entry.monster;
 }
 
 /**

@@ -1,19 +1,19 @@
 <script lang="ts">
-  import type { EmutationMonster, EmutationBodyparts } from '$lib/types';
-  import { EmutationRarity } from '$lib/types';
-  import MutationCanvas from './MutationCanvas.svelte';
-  import MutationRoll from './MutationRoll.svelte';
-  import GenField from './GenField.svelte';
+  import GenField from "./GenField.svelte";
+  import MutationCanvas from "./MutationCanvas.svelte";
+  import MutationRoll from "./MutationRoll.svelte";
+
+  import { ROLL_ORDER } from "$constants/emoji-pools";
+  import { generateMonster, getMonsterWithLuck } from "$services/index";
   import {
-    generateMonster,
-    generateRandomSeedWithLuck,
-    getRarityInfo,
-    incrementLuck,
     getLuckMultiplier,
-    getGenerationCount,
+    incrementGeneration,
     playerSession,
-  } from '$lib/generator';
-  import { ROLL_ORDER } from '$lib/emoji-pools';
+  } from "$stores/session-store";
+  import { getBodyPartKey } from "$types/bodyparts";
+  import type { EmutationBodyparts, EmutationMonster } from "$types/index";
+  import { EmutationRarity } from "$types/index";
+  import { generateRandomSeed, getRarityInfo } from "$utils/formatting";
 
   interface MutationWindowProps {
     onMonsterGenerated?: (monster: EmutationMonster) => void;
@@ -21,7 +21,7 @@
 
   let { onMonsterGenerated }: MutationWindowProps = $props();
 
-  let currentSeed = $state(generateRandomSeedWithLuck());
+  let currentSeed = $state(generateRandomSeed());
   let currentMonster = $state<EmutationMonster | null>(null);
   let currentBodyparts = $state<EmutationBodyparts>({});
 
@@ -35,17 +35,18 @@
   function generateMonsterWithRoll() {
     if (isRolling) return;
 
-    currentSeed = generateRandomSeedWithLuck();
-
-    // Pre-generate the monster (results are deterministic)
-    const monster = generateMonster(currentSeed);
+    const monster = getMonsterWithLuck(getLuckMultiplier());
     currentMonster = monster;
+
+    if (monster) {
+      currentSeed = monster.gen;
+    }
 
     // Reset rolling state and bodyparts (will be filled as slots complete)
     isRolling = true;
     currentBodyparts = {};
 
-    incrementLuck();
+    incrementGeneration();
   }
 
   // Generate monster from custom seed without animation
@@ -71,8 +72,11 @@
   function handleSlotComplete(index: number) {
     // Update bodyparts as slots complete using ROLL_ORDER
     if (currentMonster && index < ROLL_ORDER.length) {
-      const part = ROLL_ORDER[index] as keyof EmutationBodyparts;
-      currentBodyparts = { ...currentBodyparts, [part]: currentMonster.bodyparts[part] };
+      const part = getBodyPartKey(ROLL_ORDER[index]);
+      currentBodyparts = {
+        ...currentBodyparts,
+        [part]: currentMonster.bodyparts[part],
+      };
     }
   }
 
@@ -87,13 +91,15 @@
   }
 
   // Get rarity info for display
-  const rarityInfo = $derived(currentMonster ? getRarityInfo(currentMonster.rarity) : null);
+  const rarityInfo = $derived(
+    currentMonster ? getRarityInfo(currentMonster.rarity) : null,
+  );
 
   // Luck display - use $playerSession for reactive store subscription
   // The $ prefix automatically subscribes to the store and triggers updates
   const session = $derived($playerSession);
   const generationCount = $derived(session.generationCount);
-  
+
   // Calculate luck multiplier reactively based on generation count
   function calculateLuckPercent(genCount: number): number {
     return Math.round((1 - Math.exp(-genCount / 50)) * 100);
@@ -102,7 +108,9 @@
 
   // Check if generate button should be shown (hidden for NONEXISTING rarity)
   const showGenerateButton = $derived(
-    !currentMonster || currentMonster.rarity !== EmutationRarity.NONEXISTING || isRolling
+    !currentMonster ||
+      currentMonster.rarity !== EmutationRarity.NONEXISTING ||
+      isRolling,
   );
 </script>
 
@@ -119,7 +127,7 @@
         <div class="mutation-window__arrow">◀</div>
         <MutationRoll
           bodyparts={currentMonster?.bodyparts ?? {}}
-          isRolling={isRolling}
+          {isRolling}
           onSlotComplete={handleSlotComplete}
           onRollComplete={handleRollComplete}
         />
@@ -132,11 +140,18 @@
       {:else}
         <GenField bind:value={currentSeed} />
         <div class="mutation-window__seed-container">
-          
-          <button class="mutation-window__button" onclick={generateMonsterWithRoll} disabled={isRolling}>
+          <button
+            class="mutation-window__button"
+            onclick={generateMonsterWithRoll}
+            disabled={isRolling}
+          >
             Генерировать!
           </button>
-          <button class="mutation-window__button mutation-window__button--secondary" onclick={generateMonsterFromCustomSeed} disabled={isRolling}>
+          <button
+            class="mutation-window__button mutation-window__button--secondary"
+            onclick={generateMonsterFromCustomSeed}
+            disabled={isRolling}
+          >
             По сидам
           </button>
         </div>
@@ -263,7 +278,7 @@
     font-weight: 700;
     text-align: center;
     padding: 16px;
-    color: #FF0000;
+    color: #ff0000;
     border-radius: 12px;
     animation: pulse-glow 1s ease-in-out infinite alternate;
   }

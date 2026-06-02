@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { EmutationMonster } from '$lib/types';
+  import type { EmutationMonster } from '$types/index';
   import MutationCard from './MutationCard.svelte';
 
   interface MutationHistoryProps {

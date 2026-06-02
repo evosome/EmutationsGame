@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { EmutationMonster } from './lib/types';
-  import { EmutationRarity } from './lib/types';
-  import MutationWindow from './components/MutationWindow.svelte';
+  import type { EmutationMonster } from '$types/index';
+  import { EmutationRarity } from '$types/index';
   import MutationHistory from './components/MutationHistory.svelte';
+  import MutationWindow from './components/MutationWindow.svelte';
 
   let monsters = $state<EmutationMonster[]>([]);
   let isAbsoluteMonster = $state(false);

@@ -1,8 +1,16 @@
 <script lang="ts">
-  import type { EmutationMonster } from '$lib/types';
-  import MutationCanvas from './MutationCanvas.svelte';
-  import GenField from './GenField.svelte';
-  import { generateMonsterName, getRarityInfo, calculateDropChance, formatDropChance, calculatePrice, formatPrice } from '$lib/generator';
+  import GenField from "./GenField.svelte";
+  import MutationCanvas from "./MutationCanvas.svelte";
+
+  import { calculateDropChance } from "$services/drop.service";
+  import { calculatePrice } from "$services/price.service";
+  import type { EmutationMonster } from "$types/index";
+  import {
+    formatDropChance,
+    formatPrice,
+    generateMonsterName,
+    getRarityInfo,
+  } from "$utils/formatting";
 
   interface MutationCardProps {
     monster: EmutationMonster;
@@ -18,7 +26,10 @@
   const price = $derived(calculatePrice(monster.bodyparts));
   const formattedPrice = $derived(formatPrice(price));
 
-  let canvasComponent: { toDataURL: () => string; toBlob: () => Promise<Blob | null> };
+  let canvasComponent: {
+    toDataURL: () => string;
+    toBlob: () => Promise<Blob | null>;
+  };
 
   async function copyScreenshot() {
     try {
@@ -28,7 +39,7 @@
       if (blob) {
         try {
           await navigator.clipboard.write([
-            new ClipboardItem({ 'image/png': blob }),
+            new ClipboardItem({ "image/png": blob }),
           ]);
         } catch {
           // Fallback: copy gen text
@@ -36,7 +47,7 @@
         }
       }
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
       // Fallback: copy gen
       await navigator.clipboard.writeText(monster.gen);
     }
@@ -51,7 +62,11 @@
   </div>
 
   <div class="mutation-card__content">
-    <MutationCanvas bind:this={canvasComponent} bodyparts={monster.bodyparts} size={100} />
+    <MutationCanvas
+      bind:this={canvasComponent}
+      bodyparts={monster.bodyparts}
+      size={100}
+    />
 
     <div class="mutation-card__info">
       <div class="mutation-card__stats">
@@ -105,31 +120,10 @@
     align-items: center;
   }
 
-  .mutation-card__rarity {
-    padding: 4px 12px;
-    border-radius: 12px;
-    border: 1px solid;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mutation-card__rarity-label {
-    white-space: nowrap;
-  }
-
   .mutation-card__stats {
     display: flex;
     gap: 12px;
     align-items: center;
-  }
-
-  .mutation-card__chance,
-  .mutation-card__price {
-    font-size: 11px;
-    font-weight: 500;
-    text-align: center;
-    opacity: 0.8;
   }
 
   .mutation-card__copy {

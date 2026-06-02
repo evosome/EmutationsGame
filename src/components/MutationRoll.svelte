@@ -1,7 +1,14 @@
 <script lang="ts">
-  import type { EmutationBodyparts } from '$lib/types';
-  import { getEmojiPool, ROLL_ORDER } from '$lib/emoji-pools';
-  import { getRarityInfo } from '$lib/generator';
+  import { getEmojiPool, ROLL_ORDER } from '$constants/emoji-pools';
+  import { EmutationBodypartsEnum, getBodyPartKey } from '$types/bodyparts';
+  import type { EmutationBodyparts, Emoji } from '$types/index';
+  import {
+    formatDropChance,
+    formatPrice,
+    getEmojiDropChance,
+    getEmojiPrice,
+    getEmojiRarityColor,
+  } from '$utils/index';
 
   interface MutationRollProps {
     bodyparts: EmutationBodyparts;
@@ -16,83 +23,14 @@
   const rollLabels = ['Голова', 'Тело', 'Левая рука', 'Правая рука', 'Левая нога', 'Правая нога', 'Шапка'];
 
   // Track which slots have been completed (emoji + rarity color + drop chance + price)
-  let completedSlots = $state<Record<string, { emoji: string; color: string; chance: number; price: number }>>({});
+  let completedSlots = $state<
+    Partial<Record<EmutationBodypartsEnum, { emoji: string; color: string; chance: number; price: number }>>
+  >({});
   let currentRollIndex = $state(0);
   let rollingEmoji = $state('');
   let rollAnimationInterval: number | null = null;
   let isAnimating = $state(false);
 
-  /**
-   * Get rarity color for an emoji based on its weight.
-   * Lower weight = rarer = more valuable color.
-   */
-  function getEmojiRarityColor(part: string, emoji: string): string {
-    const pool = getEmojiPool(part);
-    const item = pool.find((p) => p.emoji === emoji);
-    if (!item) return '#ccc';
-
-    const normalizedScore = item.weight / 10;
-    if (normalizedScore <= 1) return getRarityInfo(9).color;
-    if (normalizedScore <= 1.5) return getRarityInfo(8).color;
-    if (normalizedScore <= 2) return getRarityInfo(7).color;
-    if (normalizedScore <= 3) return getRarityInfo(6).color;
-    if (normalizedScore <= 4) return getRarityInfo(5).color;
-    if (normalizedScore <= 5) return getRarityInfo(4).color;
-    if (normalizedScore <= 6) return getRarityInfo(3).color;
-    if (normalizedScore <= 7) return getRarityInfo(2).color;
-    if (normalizedScore <= 8) return getRarityInfo(1).color;
-    return getRarityInfo(0).color;
-  }
-
-  /**
-   * Calculate drop chance percentage for an emoji in its pool.
-   */
-  function getEmojiDropChance(part: string, emoji: string): number {
-    const pool = getEmojiPool(part);
-    const item = pool.find((p) => p.emoji === emoji);
-    if (!item) return 0;
-
-    const totalWeight = pool.reduce((sum, p) => sum + p.weight, 0);
-    return (item.weight / totalWeight) * 100;
-  }
-
-  /**
-   * Format drop chance as a readable string.
-   */
-  function formatChance(chance: number): string {
-    if (chance >= 1) {
-      return `${chance.toFixed(1)}%`;
-    } else if (chance >= 0.1) {
-      return `${chance.toFixed(2)}%`;
-    } else if (chance >= 0.01) {
-      return `${chance.toFixed(3)}%`;
-    } else {
-      return `<0.01%`;
-    }
-  }
-
-  /**
-   * Calculate price for an emoji based on its weight (inverse relationship).
-   * Rarer emojis (lower weight) cost more.
-   */
-  function getEmojiPrice(part: string, emoji: string): number {
-    const pool = getEmojiPool(part);
-    const item = pool.find((p) => p.emoji === emoji);
-    if (!item) return 0;
-
-    const totalWeight = pool.reduce((sum, p) => sum + p.weight, 0);
-    const maxWeight = 100; // Maximum possible weight
-    const baseEmojiPrice = 0.01;
-    const emojiPrice = (maxWeight / (item.weight / totalWeight) / 100) * baseEmojiPrice; // Base price per emoji
-    return Math.round(emojiPrice * 100) / 100;
-  }
-
-  /**
-   * Format price as a readable string.
-   */
-  function formatPrice(price: number): string {
-    return `$${price.toFixed(2)}`;
-  }
 
   // Watch for isRolling changes to start/stop animation
   $effect(() => {
@@ -117,18 +55,32 @@
       currentRollIndex = i;
       const part = ROLL_ORDER[i];
       const pool = getEmojiPool(part);
-      const finalEmoji = (bodyparts as any)[part] || '';
+      const partKey = getBodyPartKey(part);
+      const finalEmoji: Emoji | undefined = bodyparts[partKey];
+      const finalEmojiSymbol = finalEmoji?.unicodeSymbol || '';
 
       // Animate random emojis for a short time
-      await animateRoll(pool, finalEmoji, 500);
+      await animateRoll(pool, finalEmojiSymbol, 500);
 
       if (!isRolling) break;
 
       // Set the final emoji with rarity color, drop chance, and price
-      const rarityColor = getEmojiRarityColor(part, finalEmoji);
-      const dropChance = getEmojiDropChance(part, finalEmoji);
-      const emojiPrice = getEmojiPrice(part, finalEmoji);
-      completedSlots = { ...completedSlots, [part]: { emoji: finalEmoji, color: rarityColor, chance: dropChance, price: emojiPrice } };
+      const rarityColor = finalEmoji
+        ? getEmojiRarityColor(part, finalEmoji)
+        : '#ccc';
+      const dropChance = finalEmoji
+        ? getEmojiDropChance(part, finalEmoji)
+        : 0;
+      const emojiPrice = finalEmoji ? getEmojiPrice(part, finalEmoji) : 0;
+      completedSlots = {
+        ...completedSlots,
+        [part]: {
+          emoji: finalEmojiSymbol,
+          color: rarityColor,
+          chance: dropChance,
+          price: emojiPrice,
+        },
+      };
 
       // Emit slot complete event via callback
       onSlotComplete?.(i);
@@ -148,7 +100,11 @@
   }
 
   // Animate rolling emojis
-  function animateRoll(pool: { emoji: string }[], finalEmoji: string, duration: number): Promise<void> {
+  function animateRoll(
+    pool: { emoji: Emoji }[],
+    finalEmoji: string,
+    duration: number,
+  ): Promise<void> {
     return new Promise((resolve) => {
       const startTime = Date.now();
       const intervalTime = 80; // ms between emoji changes
@@ -162,7 +118,7 @@
         } else {
           // Show random emoji from pool
           const randomIdx = Math.floor(Math.random() * pool.length);
-          rollingEmoji = pool[randomIdx].emoji;
+          rollingEmoji = pool[randomIdx].emoji.unicodeSymbol;
         }
       }, intervalTime);
     });
@@ -194,7 +150,7 @@
   function getSlotChance(index: number): string {
     const part = ROLL_ORDER[index];
     if (index < currentRollIndex && completedSlots[part]) {
-      return formatChance(completedSlots[part].chance);
+      return formatDropChance(completedSlots[part].chance);
     }
     return '';
   }

@@ -7,7 +7,12 @@ import path from "path";
 export default defineConfig({
   resolve: {
     alias: {
-      $lib: path.resolve(__dirname, './src/lib'),
+      $lib: path.resolve(__dirname, "./src/lib"),
+      $types: path.resolve(__dirname, "./src/types"),
+      $stores: path.resolve(__dirname, "./src/stores"),
+      $utils: path.resolve(__dirname, "./src/utils"),
+      $services: path.resolve(__dirname, "./src/services"),
+      $constants: path.resolve(__dirname, "./src/constants"),
     },
   },
   plugins: [svelte(), viteSingleFile()],

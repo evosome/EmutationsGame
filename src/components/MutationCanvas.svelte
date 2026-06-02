@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { EmutationBodyparts } from '$lib/types';
+  import type { EmutationBodyparts } from '$types/index';
 
   interface MutationCanvasProps {
     bodyparts: EmutationBodyparts;
@@ -31,19 +31,19 @@
     // Hat (top center, above head)
     if (bodyparts.hat) {
       ctx.font = `${emojiSize}px serif`;
-      ctx.fillText(bodyparts.hat, center, center - emojiSize);
+      ctx.fillText(bodyparts.hat.unicodeSymbol, center, center - emojiSize);
     }
 
     // Head (upper center)
     if (bodyparts.head) {
       ctx.font = `${emojiSize * 1.2}px serif`;
-      ctx.fillText(bodyparts.head, center, center);
+      ctx.fillText(bodyparts.head.unicodeSymbol, center, center);
     }
 
     // Body (center, below head)
     if (bodyparts.body) {
       ctx.font = `${emojiSize}px serif`;
-      ctx.fillText(bodyparts.body, center, center + emojiSize);
+      ctx.fillText(bodyparts.body.unicodeSymbol, center, center + emojiSize);
     }
 
     // Left Hand (left side) - flipped
@@ -52,14 +52,14 @@
       ctx.translate(center - emojiSize, center + emojiSize);
       ctx.scale(-1, 1);
       ctx.font = `${emojiSize * 0.8}px serif`;
-      ctx.fillText(bodyparts.leftHand, 0, 0);
+      ctx.fillText(bodyparts.leftHand.unicodeSymbol, 0, 0);
       ctx.restore();
     }
 
     // Right Hand (right side)
     if (bodyparts.rightHand) {
       ctx.font = `${emojiSize * 0.8}px serif`;
-      ctx.fillText(bodyparts.rightHand, center + emojiSize, center + emojiSize);
+      ctx.fillText(bodyparts.rightHand.unicodeSymbol, center + emojiSize, center + emojiSize);
     }
 
     // Left Leg (bottom left) - flipped
@@ -68,14 +68,14 @@
       ctx.translate(center - emojiSize + (emojiSize / 2), center + 2 * emojiSize);
       ctx.scale(-1, 1);
       ctx.font = `${emojiSize * 0.7}px serif`;
-      ctx.fillText(bodyparts.leftLeg, 0, 0);
+      ctx.fillText(bodyparts.leftLeg.unicodeSymbol, 0, 0);
       ctx.restore();
     }
 
     // Right Leg (bottom right)
     if (bodyparts.rightLeg) {
       ctx.font = `${emojiSize * 0.7}px serif`;
-      ctx.fillText(bodyparts.rightLeg, center + emojiSize - (emojiSize / 2), center + 2 * emojiSize);
+      ctx.fillText(bodyparts.rightLeg.unicodeSymbol, center + emojiSize - (emojiSize / 2), center + 2 * emojiSize);
     }
   });
 
