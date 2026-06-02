@@ -1,0 +1,565 @@
+{
+  "$comment": "This is structural design data exported by the Figma Raw plugin. It is formatted to help LLMs (Large Language Models) understand design structures and components from Figma designs.",
+  "name": "MutationWindow",
+  "type": "COMPONENT",
+  "width": 670,
+  "height": 217,
+  "layoutMode": "VERTICAL",
+  "primaryAxisSizingMode": "AUTO",
+  "counterAxisSizingMode": "AUTO",
+  "primaryAxisAlignItems": "MIN",
+  "counterAxisAlignItems": "MIN",
+  "paddingLeft": 10,
+  "paddingRight": 10,
+  "paddingTop": 10,
+  "paddingBottom": 10,
+  "itemSpacing": 10,
+  "strokeWeight": 1,
+  "strokeAlign": "INSIDE",
+  "strokeCap": "NONE",
+  "strokeJoin": "MITER",
+  "children": [
+    {
+      "name": "mutation__label",
+      "type": "FRAME",
+      "width": 143,
+      "height": 39,
+      "layoutMode": "HORIZONTAL",
+      "primaryAxisSizingMode": "AUTO",
+      "counterAxisSizingMode": "AUTO",
+      "primaryAxisAlignItems": "CENTER",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 10,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "strokeCap": "NONE",
+      "strokeJoin": "MITER",
+      "children": [
+        {
+          "name": "label",
+          "type": "TEXT",
+          "width": 143,
+          "height": 39,
+          "fills": [
+            {
+              "type": "SOLID",
+              "opacity": 1,
+              "color": { "r": 0, "g": 0, "b": 0, "a": 1, "hex": "#000000" }
+            }
+          ],
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "strokeCap": "NONE",
+          "strokeJoin": "MITER",
+          "characters": "Мутация",
+          "fontSize": 32,
+          "fontName": { "family": "Inter", "style": "Bold" },
+          "fontWeight": 700,
+          "letterSpacing": { "unit": "PERCENT", "value": 0 },
+          "lineHeight": { "unit": "AUTO" },
+          "textAlignHorizontal": "LEFT",
+          "textAlignVertical": "TOP",
+          "textAutoResize": "WIDTH_AND_HEIGHT",
+          "textCase": "ORIGINAL",
+          "textDecoration": "NONE"
+        }
+      ]
+    },
+    {
+      "name": "mutation__canvas-roll-container",
+      "type": "FRAME",
+      "width": 650,
+      "height": 148,
+      "layoutMode": "HORIZONTAL",
+      "primaryAxisSizingMode": "AUTO",
+      "counterAxisSizingMode": "AUTO",
+      "primaryAxisAlignItems": "MIN",
+      "counterAxisAlignItems": "CENTER",
+      "itemSpacing": 8,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "strokeCap": "NONE",
+      "strokeJoin": "MITER",
+      "children": [
+        {
+          "name": "mutation__canvas-container",
+          "type": "FRAME",
+          "width": 148,
+          "height": 148,
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "AUTO",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlignItems": "MIN",
+          "counterAxisAlignItems": "MIN",
+          "itemSpacing": 10,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "strokeCap": "NONE",
+          "strokeJoin": "MITER",
+          "children": [
+            {
+              "name": "EmutationCanvas",
+              "type": "INSTANCE",
+              "width": 148,
+              "height": 148,
+              "cornerRadius": 16,
+              "layoutMode": "VERTICAL",
+              "primaryAxisSizingMode": "FIXED",
+              "counterAxisSizingMode": "FIXED",
+              "primaryAxisAlignItems": "CENTER",
+              "counterAxisAlignItems": "CENTER",
+              "itemSpacing": 10,
+              "strokes": [
+                {
+                  "type": "SOLID",
+                  "opacity": 1,
+                  "color": {
+                    "r": 0.8509804010391235,
+                    "g": 0.8509804010391235,
+                    "b": 0.8509804010391235,
+                    "a": 1,
+                    "hex": "#d9d9d9"
+                  }
+                }
+              ],
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "strokeCap": "NONE",
+              "strokeJoin": "MITER",
+              "mainComponent": { "name": "EmutationCanvas" },
+              "children": [
+                {
+                  "name": "MonsterBodypart",
+                  "type": "FRAME",
+                  "width": 148,
+                  "height": 148,
+                  "layoutMode": "VERTICAL",
+                  "primaryAxisSizingMode": "FIXED",
+                  "counterAxisSizingMode": "FIXED",
+                  "primaryAxisAlignItems": "MIN",
+                  "counterAxisAlignItems": "CENTER",
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "strokeCap": "NONE",
+                  "strokeJoin": "MITER",
+                  "children": [
+                    {
+                      "name": "Hat",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    },
+                    {
+                      "name": "LeftHand",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    },
+                    {
+                      "name": "RightHand",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    },
+                    {
+                      "name": "Head",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    },
+                    {
+                      "name": "RightLeg",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    },
+                    {
+                      "name": "LeftLeg",
+                      "type": "FRAME",
+                      "width": 32,
+                      "height": 32,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "FIXED",
+                      "counterAxisSizingMode": "FIXED",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "itemSpacing": 10,
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "mutation__info",
+          "type": "FRAME",
+          "width": 494,
+          "height": 144,
+          "layoutMode": "VERTICAL",
+          "primaryAxisSizingMode": "AUTO",
+          "counterAxisSizingMode": "AUTO",
+          "primaryAxisAlignItems": "CENTER",
+          "counterAxisAlignItems": "MIN",
+          "itemSpacing": 8,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "strokeCap": "NONE",
+          "strokeJoin": "MITER",
+          "children": [
+            {
+              "name": "mutation__roll-container",
+              "type": "FRAME",
+              "width": 494,
+              "height": 88,
+              "layoutMode": "HORIZONTAL",
+              "primaryAxisSizingMode": "AUTO",
+              "counterAxisSizingMode": "AUTO",
+              "primaryAxisAlignItems": "MIN",
+              "counterAxisAlignItems": "CENTER",
+              "itemSpacing": 8,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "strokeCap": "NONE",
+              "strokeJoin": "MITER",
+              "children": [
+                {
+                  "name": "mutation__arrow-icon",
+                  "type": "FRAME",
+                  "width": 70,
+                  "height": 60,
+                  "layoutMode": "VERTICAL",
+                  "primaryAxisSizingMode": "AUTO",
+                  "counterAxisSizingMode": "FIXED",
+                  "primaryAxisAlignItems": "MIN",
+                  "counterAxisAlignItems": "MIN",
+                  "itemSpacing": 10,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "strokeCap": "NONE",
+                  "strokeJoin": "MITER",
+                  "children": [
+                    {
+                      "name": "triangle",
+                      "type": "VECTOR",
+                      "width": 60.000003814697266,
+                      "height": 70.00000762939453,
+                      "rotation": 90,
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "opacity": 1,
+                          "color": {
+                            "r": 0.8509804010391235,
+                            "g": 0.8509804010391235,
+                            "b": 0.8509804010391235,
+                            "a": 1,
+                            "hex": "#d9d9d9"
+                          }
+                        }
+                      ],
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    }
+                  ]
+                },
+                {
+                  "name": "MutationRoll",
+                  "type": "INSTANCE",
+                  "width": 416,
+                  "height": 88,
+                  "layoutMode": "HORIZONTAL",
+                  "primaryAxisSizingMode": "AUTO",
+                  "counterAxisSizingMode": "AUTO",
+                  "primaryAxisAlignItems": "MIN",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 8,
+                  "paddingRight": 8,
+                  "paddingTop": 8,
+                  "paddingBottom": 8,
+                  "itemSpacing": 10,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "strokeCap": "NONE",
+                  "strokeJoin": "MITER",
+                  "mainComponent": { "name": "MutationRoll" },
+                  "children": [
+                    {
+                      "name": "RollCells",
+                      "type": "FRAME",
+                      "width": 400,
+                      "height": 72,
+                      "cornerRadius": 8,
+                      "layoutMode": "HORIZONTAL",
+                      "primaryAxisSizingMode": "AUTO",
+                      "counterAxisSizingMode": "AUTO",
+                      "primaryAxisAlignItems": "MIN",
+                      "counterAxisAlignItems": "CENTER",
+                      "paddingLeft": 8,
+                      "paddingRight": 8,
+                      "paddingTop": 4,
+                      "paddingBottom": 4,
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "opacity": 1,
+                          "color": {
+                            "r": 0.8509804010391235,
+                            "g": 0.8509804010391235,
+                            "b": 0.8509804010391235,
+                            "a": 1,
+                            "hex": "#d9d9d9"
+                          }
+                        }
+                      ],
+                      "strokeWeight": 1,
+                      "strokeAlign": "INSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "mutation__seed-button-container",
+              "type": "FRAME",
+              "width": 494,
+              "height": 48,
+              "layoutMode": "HORIZONTAL",
+              "primaryAxisSizingMode": "FIXED",
+              "counterAxisSizingMode": "AUTO",
+              "primaryAxisAlignItems": "MIN",
+              "counterAxisAlignItems": "CENTER",
+              "itemSpacing": 8,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "strokeCap": "NONE",
+              "strokeJoin": "MITER",
+              "children": [
+                {
+                  "name": "GenField",
+                  "type": "INSTANCE",
+                  "width": 243,
+                  "height": 48,
+                  "cornerRadius": 8,
+                  "layoutMode": "VERTICAL",
+                  "primaryAxisSizingMode": "FIXED",
+                  "counterAxisSizingMode": "FIXED",
+                  "primaryAxisAlignItems": "CENTER",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 8,
+                  "paddingRight": 8,
+                  "paddingTop": 4,
+                  "paddingBottom": 4,
+                  "itemSpacing": 10,
+                  "strokes": [
+                    {
+                      "type": "SOLID",
+                      "opacity": 1,
+                      "color": {
+                        "r": 0.8509804010391235,
+                        "g": 0.8509804010391235,
+                        "b": 0.8509804010391235,
+                        "a": 1,
+                        "hex": "#d9d9d9"
+                      }
+                    }
+                  ],
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "strokeCap": "NONE",
+                  "strokeJoin": "MITER",
+                  "mainComponent": { "name": "GenField" },
+                  "children": [
+                    {
+                      "name": "XYZ-X9A-090-ABB",
+                      "type": "TEXT",
+                      "width": 145,
+                      "height": 19,
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "opacity": 1,
+                          "color": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0,
+                            "a": 1,
+                            "hex": "#000000"
+                          }
+                        }
+                      ],
+                      "strokeWeight": 1,
+                      "strokeAlign": "OUTSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER",
+                      "characters": "XYZ-X9A-090-ABB",
+                      "fontSize": 16,
+                      "fontName": { "family": "Inter", "style": "Regular" },
+                      "fontWeight": 400,
+                      "letterSpacing": { "unit": "PERCENT", "value": 0 },
+                      "lineHeight": { "unit": "AUTO" },
+                      "textAlignHorizontal": "LEFT",
+                      "textAlignVertical": "TOP",
+                      "textAutoResize": "WIDTH_AND_HEIGHT",
+                      "textCase": "ORIGINAL",
+                      "textDecoration": "NONE"
+                    }
+                  ]
+                },
+                {
+                  "name": "Button",
+                  "type": "INSTANCE",
+                  "width": 243,
+                  "height": 48,
+                  "cornerRadius": 8,
+                  "layoutMode": "VERTICAL",
+                  "primaryAxisSizingMode": "FIXED",
+                  "counterAxisSizingMode": "FIXED",
+                  "primaryAxisAlignItems": "CENTER",
+                  "counterAxisAlignItems": "CENTER",
+                  "paddingLeft": 8,
+                  "paddingRight": 8,
+                  "paddingTop": 4,
+                  "paddingBottom": 4,
+                  "itemSpacing": 10,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "opacity": 1,
+                      "color": {
+                        "r": 0.8509804010391235,
+                        "g": 0.8509804010391235,
+                        "b": 0.8509804010391235,
+                        "a": 1,
+                        "hex": "#d9d9d9"
+                      }
+                    }
+                  ],
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "strokeCap": "NONE",
+                  "strokeJoin": "MITER",
+                  "mainComponent": { "name": "Button" },
+                  "children": [
+                    {
+                      "name": "label",
+                      "type": "TEXT",
+                      "width": 114,
+                      "height": 19,
+                      "fills": [
+                        {
+                          "type": "SOLID",
+                          "opacity": 1,
+                          "color": {
+                            "r": 0,
+                            "g": 0,
+                            "b": 0,
+                            "a": 1,
+                            "hex": "#000000"
+                          }
+                        }
+                      ],
+                      "strokeWeight": 1,
+                      "strokeAlign": "OUTSIDE",
+                      "strokeCap": "NONE",
+                      "strokeJoin": "MITER",
+                      "characters": "Генерировать!",
+                      "fontSize": 16,
+                      "fontName": { "family": "Inter", "style": "Regular" },
+                      "fontWeight": 400,
+                      "letterSpacing": { "unit": "PERCENT", "value": 0 },
+                      "lineHeight": { "unit": "AUTO" },
+                      "textAlignHorizontal": "LEFT",
+                      "textAlignVertical": "TOP",
+                      "textAutoResize": "WIDTH_AND_HEIGHT",
+                      "textCase": "ORIGINAL",
+                      "textDecoration": "NONE"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "textContent": [
+    {
+      "name": "label",
+      "text": "Мутация",
+      "path": "MutationWindow/mutation__label/label",
+      "nodeType": "TEXT"
+    },
+    {
+      "name": "XYZ-X9A-090-ABB",
+      "text": "XYZ-X9A-090-ABB",
+      "path": "MutationWindow/mutation__canvas-roll-container/mutation__info/mutation__seed-button-container/GenField/XYZ-X9A-090-ABB",
+      "nodeType": "TEXT"
+    },
+    {
+      "name": "label",
+      "text": "Генерировать!",
+      "path": "MutationWindow/mutation__canvas-roll-container/mutation__info/mutation__seed-button-container/Button/label",
+      "nodeType": "TEXT"
+    }
+  ]
+}
