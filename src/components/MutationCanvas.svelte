@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { EmutationBodyparts } from '$types/index';
+  import type { EmutationBodyparts, Emoji } from '$types/index';
+  import { loadEmojiSVGData, hasEmoji } from '$utils/svg-emoji-loader';
 
   interface MutationCanvasProps {
     bodyparts: EmutationBodyparts;
@@ -7,105 +8,179 @@
   }
 
   let { bodyparts, size = 148 }: MutationCanvasProps = $props();
-  let canvas: HTMLCanvasElement;
 
   // Calculate emoji size based on canvas size
   const emojiSize = Math.floor(size / 5);
 
-  // Draw the monster on canvas
-  $effect(() => {
-    const ctx = canvas?.getContext('2d');
-    if (!ctx || !canvas) return;
+  interface EmojiPosition {
+    emoji: Emoji;
+    x: number;
+    y: number;
+    scale?: number;
+    flip?: boolean;
+    id: string;
+  }
 
-    // Clear canvas
-    ctx.clearRect(0, 0, size, size);
-
-    // White background
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, size, size);
-
+  // Get positioned emojis for the monster
+  const positionedEmojis = $derived.by(() => {
     const center = size / 2;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
+    const positions: EmojiPosition[] = [];
+    let index = 0;
 
     // Hat (top center, above head)
     if (bodyparts.hat) {
-      ctx.font = `${emojiSize}px serif`;
-      ctx.fillText(bodyparts.hat.unicodeSymbol, center, center - emojiSize);
+      positions.push({
+        emoji: bodyparts.hat,
+        x: center,
+        y: center - emojiSize,
+        id: `hat-${index++}`
+      });
     }
 
-    // Head (upper center)
+    // Head (upper center) - slightly larger
     if (bodyparts.head) {
-      ctx.font = `${emojiSize * 1.2}px serif`;
-      ctx.fillText(bodyparts.head.unicodeSymbol, center, center);
+      positions.push({
+        emoji: bodyparts.head,
+        x: center,
+        y: center,
+        id: `head-${index++}`
+      });
     }
 
     // Body (center, below head)
     if (bodyparts.body) {
-      ctx.font = `${emojiSize}px serif`;
-      ctx.fillText(bodyparts.body.unicodeSymbol, center, center + emojiSize);
+      positions.push({
+        emoji: bodyparts.body,
+        x: center,
+        y: center + emojiSize,
+        id: `body-${index++}`
+      });
     }
 
     // Left Hand (left side) - flipped
     if (bodyparts.leftHand) {
-      ctx.save();
-      ctx.translate(center - emojiSize, center + emojiSize);
-      ctx.scale(-1, 1);
-      ctx.font = `${emojiSize * 0.8}px serif`;
-      ctx.fillText(bodyparts.leftHand.unicodeSymbol, 0, 0);
-      ctx.restore();
+      positions.push({
+        emoji: bodyparts.leftHand,
+        x: center - emojiSize,
+        y: center + emojiSize,
+        flip: true,
+        id: `leftHand-${index++}`
+      });
     }
 
     // Right Hand (right side)
     if (bodyparts.rightHand) {
-      ctx.font = `${emojiSize * 0.8}px serif`;
-      ctx.fillText(bodyparts.rightHand.unicodeSymbol, center + emojiSize, center + emojiSize);
+      positions.push({
+        emoji: bodyparts.rightHand,
+        x: center + emojiSize,
+        y: center + emojiSize,
+        id: `rightHand-${index++}`
+      });
     }
 
     // Left Leg (bottom left) - flipped
     if (bodyparts.leftLeg) {
-      ctx.save();
-      ctx.translate(center - emojiSize + (emojiSize / 2), center + 2 * emojiSize);
-      ctx.scale(-1, 1);
-      ctx.font = `${emojiSize * 0.7}px serif`;
-      ctx.fillText(bodyparts.leftLeg.unicodeSymbol, 0, 0);
-      ctx.restore();
+      positions.push({
+        emoji: bodyparts.leftLeg,
+        x: center - emojiSize + (emojiSize / 2),
+        y: center + 2 * emojiSize,
+        flip: true,
+        id: `leftLeg-${index++}`
+      });
     }
 
     // Right Leg (bottom right)
     if (bodyparts.rightLeg) {
-      ctx.font = `${emojiSize * 0.7}px serif`;
-      ctx.fillText(bodyparts.rightLeg.unicodeSymbol, center + emojiSize - (emojiSize / 2), center + 2 * emojiSize);
+      positions.push({
+        emoji: bodyparts.rightLeg,
+        x: center + emojiSize - (emojiSize / 2),
+        y: center + 2 * emojiSize,
+        id: `rightLeg-${index++}`
+      });
     }
+
+    return positions;
   });
 
-  // Function to get screenshot as data URL
-  function toDataURL(type?: string, quality?: number): string {
-    return canvas.toDataURL(type, quality);
+  // Helper to get emoji SVG content
+  function getEmojiSVG(emoji: Emoji): string | null {
+    return loadEmojiSVGData(emoji) || null;
   }
 
-  // Function to get screenshot as Blob
+  // Function to get screenshot as data URL (using html2canvas or similar would be needed)
+  // For now, we provide a placeholder that indicates this needs a different approach
+  function toDataURL(type?: string, quality?: number): string {
+    console.warn('toDataURL with Twemoji requires html2canvas or similar library');
+    return '';
+  }
+
   async function toBlob(type?: string, quality?: number): Promise<Blob | null> {
-    return new Promise((resolve) => {
-      canvas.toBlob(resolve, type, quality);
-    });
+    console.warn('toBlob with Twemoji requires html2canvas or similar library');
+    return null;
   }
 
   export { toDataURL, toBlob };
 </script>
 
-<canvas
-  bind:this={canvas}
+<div
   class="mutation-canvas"
-  width={size}
-  height={size}
   style="width: {size}px; height: {size}px;"
-></canvas>
+>
+  {#each positionedEmojis as pos (pos.id)}
+    {@const svgContent = getEmojiSVG(pos.emoji)}
+    {@const scaledSize = emojiSize * (pos.scale || 1)}
+    
+    {#if svgContent}
+      <img
+        class="emoji-sprite"
+        style="
+          position: absolute;
+          left: {pos.x - scaledSize / 2}px;
+          top: {pos.y - scaledSize / 2}px;
+          width: {scaledSize}px;
+          height: {scaledSize}px;
+          transform: {pos.flip ? 'scaleX(-1)' : 'none'};
+        "
+        src="{svgContent}"
+        alt="{pos.emoji.unicodeSymbol}"
+      />
+    {:else}
+      <!-- Fallback to native emoji if Twemoji not available -->
+      <span
+        class="emoji-sprite native"
+        style="
+          position: absolute;
+          left: {pos.x}px;
+          top: {pos.y}px;
+          font-size: {scaledSize}px;
+          transform: {pos.flip ? 'scaleX(-1)' : 'none'};
+          text-align: center;
+          line-height: 1;
+        "
+      >{pos.emoji.unicodeSymbol}</span>
+    {/if}
+  {/each}
+</div>
 
 <style>
   .mutation-canvas {
+    position: relative;
+    background-color: #ffffff;
     border: 1px solid #d9d9d9;
     border-radius: 16px;
+    overflow: hidden;
+    display: block;
+  }
+
+  .emoji-sprite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .emoji-sprite :global(svg) {
+    width: 100%;
+    height: 100%;
     display: block;
   }
 </style>

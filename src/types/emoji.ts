@@ -3,6 +3,7 @@
  */
 export interface Emoji {
   unicodeSymbol: string;
+  qualifiedName: string;
   name?: string;
 }
 

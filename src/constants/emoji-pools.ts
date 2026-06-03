@@ -1,7 +1,9 @@
 import type { WeightedEmoji } from '$types/index';
 import { EmutationBodypartsEnum } from '$types/bodyparts';
 
-import {
+import emojis from '$assets/emojis.json';
+
+const {
   GARLIC,
   HELMET,
   SUN_HAT,
@@ -27,7 +29,6 @@ import {
   RICH,
   DISGUISED,
   STAR_OF_DAVID,
-  SHAKEN,
   OLD_MAN,
   EXPLODING,
   CHEESE,
@@ -47,15 +48,12 @@ import {
   ICE_CUBE,
   TREE,
   PALM,
-  TORNADO,
   PICK,
   HAMMER,
-  VICTORY,
   OK,
   ROCKS,
   BOW,
   KNIFE,
-  POINT_UP,
   MUSCLE,
   FIST,
   POINT_AT,
@@ -72,14 +70,13 @@ import {
   SLOT_MACHINE,
   DICE,
   SOAP,
-  PUSH,
   LEG,
   HIKING_BOOT,
   BOOT,
   HEEL,
   BUCKET,
   PROSTHETIC,
-} from './emojis';
+} = emojis;
 
 /**
  * Hat emojis pool
@@ -116,7 +113,6 @@ export const HEAD_EMOJIS: WeightedEmoji[] = [
   { emoji: RICH, weight: 20 },
   { emoji: DISGUISED, weight: 20 },
   { emoji: STAR_OF_DAVID, weight: 20 },
-  { emoji: SHAKEN, weight: 5 },
   { emoji: OLD_MAN, weight: 5 },
   { emoji: EXPLODING, weight: 2 },
   { emoji: CHEESE, weight: 2 },
@@ -144,7 +140,6 @@ export const BODY_EMOJIS: WeightedEmoji[] = [
   { emoji: ICE_CUBE, weight: 2 },
   { emoji: TREE, weight: 2 },
   { emoji: PALM, weight: 2 },
-  { emoji: TORNADO, weight: 1 },
 ];
 
 /**
@@ -153,12 +148,10 @@ export const BODY_EMOJIS: WeightedEmoji[] = [
 export const HAND_EMOJIS: WeightedEmoji[] = [
   { emoji: PICK, weight: 100 },
   { emoji: HAMMER, weight: 100 },
-  { emoji: VICTORY, weight: 100 },
   { emoji: OK, weight: 100 },
   { emoji: ROCKS, weight: 100 },
   { emoji: BOW, weight: 50 },
   { emoji: KNIFE, weight: 50 },
-  { emoji: POINT_UP, weight: 50 },
   { emoji: MUSCLE, weight: 20 },
   { emoji: FIST, weight: 20 },
   { emoji: POINT_AT, weight: 20 },
@@ -175,7 +168,6 @@ export const HAND_EMOJIS: WeightedEmoji[] = [
   { emoji: SLOT_MACHINE, weight: 2 },
   { emoji: DICE, weight: 2 },
   { emoji: SOAP, weight: 2 },
-  { emoji: PUSH, weight: 1 },
 ];
 
 /**
@@ -188,7 +180,6 @@ export const LEG_EMOJIS: WeightedEmoji[] = [
   { emoji: HEEL, weight: 20 },
   { emoji: ICE_CUBE, weight: 5 },
   { emoji: BUCKET, weight: 3 },
-  { emoji: TORNADO, weight: 2 },
   { emoji: PROSTHETIC, weight: 1 },
 ];
 

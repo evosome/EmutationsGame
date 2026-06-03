@@ -4,6 +4,7 @@
   import type { Emoji } from "$types/emoji";
   import { getEmojiRarityColor } from "$utils/emoji-roll";
   import { untrack } from "svelte";
+  import EmojiComponent from "$components/Emoji.svelte";
 
   // Props
   let props: {
@@ -225,7 +226,9 @@
           ? getEmojiRarityColor(props.part, cell.emoji)
           : '#fffff'}80;"
       >
-        {cell.emoji?.unicodeSymbol}
+        {#if cell.emoji}
+          <EmojiComponent emoji={cell.emoji} size={24} />
+        {/if}
       </span>
     {/each}
   </div>
