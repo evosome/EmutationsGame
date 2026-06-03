@@ -1,7 +1,7 @@
 <script lang="ts">
   import GenField from "./GenField.svelte";
   import MutationCanvas from "./MutationCanvas.svelte";
-  import MutationRoll from "./MutationRoll.svelte";
+  import { MutationRoll } from "./roll/index";
 
   import { ROLL_ORDER } from "$constants/emoji-pools";
   import { generateMonster, getMonsterWithLuck } from "$services/index";
@@ -13,7 +13,7 @@
   import { getBodyPartKey } from "$types/bodyparts";
   import type { EmutationBodyparts, EmutationMonster } from "$types/index";
   import { EmutationRarity } from "$types/index";
-  import { generateRandomSeed, getRarityInfo } from "$utils/formatting";
+  import { generateMonsterName, generateRandomSeed, getRarityInfo } from "$utils/formatting";
 
   interface MutationWindowProps {
     onMonsterGenerated?: (monster: EmutationMonster) => void;
@@ -122,9 +122,12 @@
       <MutationCanvas bodyparts={currentBodyparts} size={148} />
     </div>
 
+    <div class="mutation-window__result" style="color: {rarityInfo?.color}">
+      {currentMonster && !isRolling ? generateMonsterName(currentMonster) : "Ожидаем монстрика..."}
+    </div>
+
     <div class="mutation-window__info">
       <div class="mutation-window__roll-container">
-        <div class="mutation-window__arrow">◀</div>
         <MutationRoll
           bodyparts={currentMonster?.bodyparts ?? {}}
           {isRolling}
@@ -157,12 +160,6 @@
         </div>
       {/if}
 
-      {#if currentMonster && !isRolling}
-        <div class="mutation-window__result" style="color: {rarityInfo?.color}">
-          {currentMonster.baseName} • {rarityInfo?.name}
-        </div>
-      {/if}
-
       {#if generationCount > 0}
         <div class="mutation-window__luck">
           ✨ Удача: {luckPercent}%
@@ -183,6 +180,14 @@
     background: #fff;
   }
 
+  @media (max-width: 370px) {
+    .mutation-window {
+      padding: 0px;
+      border: none;
+      border-radius: 0px;
+    }
+  }
+
   .mutation-window__label {
     font-size: 24px;
     font-weight: 700;
@@ -192,8 +197,9 @@
 
   .mutation-window__content {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 16px;
-    align-items: flex-start;
   }
 
   .mutation-window__canvas-container {
@@ -201,6 +207,7 @@
   }
 
   .mutation-window__info {
+    width: 100%;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -255,6 +262,7 @@
   }
 
   .mutation-window__result {
+    width: 100%;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -295,11 +303,6 @@
   }
 
   @media (max-width: 640px) {
-    .mutation-window__content {
-      flex-direction: column;
-      align-items: center;
-    }
-
     .mutation-window__seed-container {
       flex-direction: column;
     }

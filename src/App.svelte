@@ -1,19 +1,21 @@
 <script lang="ts">
-  import type { EmutationMonster } from '$types/index';
-  import { EmutationRarity } from '$types/index';
-  import MutationHistory from './components/MutationHistory.svelte';
-  import MutationWindow from './components/MutationWindow.svelte';
+  import "./styles/colors.css";
+
+  import type { EmutationMonster } from "$types/index";
+  import { EmutationRarity } from "$types/index";
+  import MutationHistory from "./components/MutationHistory.svelte";
+  import MutationWindow from "./components/MutationWindow.svelte";
 
   let monsters = $state<EmutationMonster[]>([]);
   let isAbsoluteMonster = $state(false);
   const maxHistory = 6;
-  const ABSOLUTE_MONSTER_TITLE = 'Вы создали абсолютного монстрика!';
-  let originalTitle = $state('');
+  const ABSOLUTE_MONSTER_TITLE = "Вы создали абсолютного монстрика!";
+  let originalTitle = $state("");
 
   // Store original title on mount and cleanup on unmount
   $effect(() => {
     originalTitle = document.title;
-    
+
     return () => {
       document.title = originalTitle;
     };
@@ -23,7 +25,7 @@
   function handleMonsterGenerated(monster: EmutationMonster) {
     // Add to history (at the beginning)
     monsters = [monster, ...monsters].slice(0, maxHistory);
-    
+
     // Check for NONEXISTING rarity - trigger absolute monster effect
     if (monster.rarity === EmutationRarity.NONEXISTING) {
       triggerAbsoluteMonsterEffect();
@@ -48,7 +50,7 @@
     </section>
 
     <section class="app__history-section">
-      <MutationHistory monsters={monsters} />
+      <MutationHistory {monsters} />
     </section>
   </div>
 </main>
@@ -85,6 +87,18 @@
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
+  }
+
+  @media (max-width: 431.98px) {
+    .app__content {
+      padding: 4px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .app__content {
+      padding: 0px;
+    }
   }
 
   .app__mutation-section {

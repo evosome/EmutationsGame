@@ -33,9 +33,7 @@ export function formatDropChance(chance: number): string {
   if (percentage >= 1) {
     return `${percentage.toFixed(2)}%`;
   } else if (percentage >= 0.01) {
-    return `${percentage.toFixed(4)}%`;
-  } else if (percentage >= 0.0001) {
-    return `${percentage.toFixed(6)}%`;
+    return `${percentage.toFixed(3)}%`;
   } else {
     return `~0.00000${(percentage * 100).toFixed(2).replace("0.", "")}%`;
   }
