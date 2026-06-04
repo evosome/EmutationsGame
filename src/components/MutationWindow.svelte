@@ -150,38 +150,40 @@
         />
       </div>
 
+      <div
+        class="mutation-window__luck"
+        style="background-color: {luckDriftColor}"
+      >
+        ✨ Удача: {displayedLuckPercent}% ({displayedLuckDrift >= 0
+          ? "+"
+          : ""}{displayedLuckDriftPercent}%)
+      </div>
+
       {#if currentMonster?.rarity === EmutationRarity.NONEXISTING && !isRolling}
         <div class="mutation-window__absolute-monster-message">
           ВЫ СОЗДАЛИ АБСОЛЮТНОГО МОНСТРИКА!
         </div>
       {:else}
-        <GenField bind:value={currentSeed} />
         <div class="mutation-window__seed-container">
-          <button
-            class="mutation-window__button"
-            onclick={generateMonsterWithRoll}
-            disabled={isRolling}
-          >
-            Генерировать!
-          </button>
-          <button
-            class="mutation-window__button mutation-window__button--secondary"
-            onclick={generateMonsterFromCustomSeed}
-            disabled={isRolling}
-          >
-            По сидам
-          </button>
-        </div>
-      {/if}
-
-      {#if generationCount > 0}
-        <div
-          class="mutation-window__luck"
-          style="background-color: {luckDriftColor}"
-        >
-          ✨ Удача: {displayedLuckPercent}% ({displayedLuckDrift >= 0
-            ? "+"
-            : "-"}{displayedLuckDriftPercent}%)
+          <div class="seed-container__gen-button">
+            <button
+              class="mutation-window__button mutation-window__button--primary"
+              onclick={generateMonsterWithRoll}
+              disabled={isRolling}
+            >
+              Генерировать!
+            </button>
+          </div>
+          <div class="seed-container__seed-view">
+            <GenField bind:value={currentSeed} />
+            <button
+              class="mutation-window__button mutation-window__button--secondary"
+              onclick={generateMonsterFromCustomSeed}
+              disabled={isRolling}
+            >
+              По сидам
+            </button>
+          </div>
         </div>
       {/if}
     </div>
@@ -197,14 +199,6 @@
     border: 1px solid #d9d9d9;
     border-radius: 12px;
     background: #fff;
-  }
-
-  @media (max-width: 370px) {
-    .mutation-window {
-      padding: 0px;
-      border: none;
-      border-radius: 0px;
-    }
   }
 
   .mutation-window__label {
@@ -241,8 +235,35 @@
 
   .mutation-window__seed-container {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
+    flex-direction: column;
+  }
+
+  .seed-container__seed-view {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .seed-container__seed-view > * {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .seed-container__gen-button {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+  }
+
+  .seed-container__gen-button > * {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .mutation-window__button {
@@ -264,6 +285,10 @@
   .mutation-window__button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  .mutation-window__button--primary {
+    background-color: var(--accent-purple);
   }
 
   .mutation-window__button--secondary {
@@ -315,9 +340,21 @@
     }
   }
 
-  @media (max-width: 640px) {
-    .mutation-window__seed-container {
-      flex-direction: column;
+  @media (max-width: 390px) {
+    .mutation-window__label {
+      display: none;
+    }
+    .mutation-window__content {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+
+  @media (max-width: 370px) {
+    .mutation-window {
+      padding: 0px;
+      border: none;
+      border-radius: 0px;
     }
   }
 </style>

@@ -88,16 +88,6 @@
     return true;
   }
 
-  function getCurrentLabel() {
-    if (isRolling) {
-      if (completedSet.size >= ROLL_ORDER.length) {
-        return "Готово!";
-      }
-      return "Крутим...";
-    }
-    return "Ожидание...";
-  }
-
   let stopTimers: ReturnType<typeof setTimeout>[] = [];
 
   $effect(() => {
@@ -147,9 +137,6 @@
       </div>
     {/each}
   </div>
-  <div class="mutation-roll__label">
-    {getCurrentLabel()}
-  </div>
 </div>
 
 <style>
@@ -176,12 +163,5 @@
     flex-direction: column;
     align-items: center;
     gap: 2px;
-  }
-
-  .mutation-roll__label {
-    font-size: 14px;
-    color: #666;
-    text-align: center;
-    min-height: 20px;
   }
 </style>

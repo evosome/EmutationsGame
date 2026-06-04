@@ -89,6 +89,16 @@
     box-sizing: border-box;
   }
 
+  .app__mutation-section {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .app__history-section {
+    flex: 0 0 380px;
+    min-width: 0;
+  }
+
   @media (max-width: 431.98px) {
     .app__content {
       padding: 4px;
@@ -101,27 +111,23 @@
     }
   }
 
-  .app__mutation-section {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .app__history-section {
-    flex: 0 0 380px;
-    min-width: 0;
-  }
-
   @media (max-width: 900px) {
     .app__content {
       flex-direction: column;
     }
 
     .app__history-section {
-      flex: 1;
+      flex-grow: 0;
     }
 
     .app__title {
       font-size: 24px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .app__title {
+      font-size: 20px;
     }
   }
 </style>
