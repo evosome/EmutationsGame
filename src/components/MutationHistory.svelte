@@ -1,14 +1,14 @@
 <script lang="ts">
-  import type { EmutationMonster } from '$types/index';
+  import type { MutationInfo } from '$types/index';
   import MutationCard from './MutationCard.svelte';
 
   interface MutationHistoryProps {
-    monsters?: EmutationMonster[];
+    mutations?: MutationInfo[];
     maxItems?: number;
   }
 
-  let { monsters = [], maxItems = 6 }: MutationHistoryProps = $props();
-  const limitedMonsters = $derived(monsters.slice(0, maxItems));
+  let { mutations = [], maxItems = 6 }: MutationHistoryProps = $props();
+  const limitedMonsters = $derived(mutations.slice(0, maxItems));
 
 </script>
 
@@ -21,8 +21,8 @@
         Пока нет мутантов. Создайте первого!
       </div>
     {:else}
-      {#each limitedMonsters as monster}
-        <MutationCard monster={monster} showCopyButton />
+      {#each limitedMonsters as mutationInfo}
+        <MutationCard mutationInfo={mutationInfo} showCopyButton />
       {/each}
     {/if}
   </div>

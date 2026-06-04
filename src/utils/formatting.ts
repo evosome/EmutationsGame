@@ -46,7 +46,7 @@ export function formatPrice(
   price: number,
   walletSymbol = BASE_WALLET_SYMBOL,
 ): string {
-  return `${price.toFixed(1)}${walletSymbol}`;
+  return `${price.toFixed(1)} ${walletSymbol}`;
 }
 
 /**
