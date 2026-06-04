@@ -205,7 +205,6 @@ class MonsterPool {
       return null;
     }
 
-    luck += (Math.random() - 0.25) * 0.45;
     const clampedLuck = Math.max(0, Math.min(1, luck));
 
     console.log(`Overrandomized luck = ${clampedLuck}`);

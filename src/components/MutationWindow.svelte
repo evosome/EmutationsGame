@@ -4,7 +4,12 @@
   import { MutationRoll } from "./roll/index";
 
   import { ROLL_ORDER } from "$constants/emoji-pools";
-  import { generateMonster, getMonsterWithLuck } from "$services/index";
+  import {
+    generateMonster,
+    getMonsterWithLuck,
+    calculateLuckDrift,
+    calculatePrice,
+  } from "$services/index";
   import {
     getLuckMultiplier,
     incrementGeneration,
@@ -13,7 +18,12 @@
   import { getBodyPartKey } from "$types/bodyparts";
   import type { EmutationBodyparts, EmutationMonster } from "$types/index";
   import { EmutationRarity } from "$types/index";
-  import { generateMonsterName, generateRandomSeed, getRarityInfo } from "$utils/formatting";
+  import {
+    formatPrice,
+    generateMonsterName,
+    generateRandomSeed,
+    getRarityInfo,
+  } from "$utils/formatting";
 
   interface MutationWindowProps {
     onMonsterGenerated?: (monster: EmutationMonster) => void;
@@ -24,45 +34,65 @@
   let currentSeed = $state(generateRandomSeed());
   let currentMonster = $state<EmutationMonster | null>(null);
   let currentBodyparts = $state<EmutationBodyparts>({});
-
-  // Rolling state
   let isRolling = $state(false);
 
-  // Track if we've shown the absolute monster message
-  let showAbsoluteMonsterMessage = $state(false);
+  const session = $derived($playerSession);
+  const generationCount = $derived(session.generationCount);
 
-  // Generate monster with animation
+  let displayedLuckPercent = $state(0);
+  let displayedLuckDrift = $state(0);
+  let displayedLuckDriftPercent = $state(0);
+
+  const rarityInfo = $derived(
+    currentMonster ? getRarityInfo(currentMonster.rarity) : null,
+  );
+
+  const monsterPrice = $derived(
+    currentMonster ? calculatePrice(currentMonster.bodyparts) : null,
+  );
+
+  const luckDriftColor = $derived(
+    displayedLuckDrift >= 0 ? "var(--color-success)" : "var(--color-danger)",
+  );
+
   function generateMonsterWithRoll() {
     if (isRolling) return;
 
-    const monster = getMonsterWithLuck(getLuckMultiplier());
+    // calculate luck for THE CURRENT roll
+    const multiplier = 1 - Math.exp(-session.generationCount / 55);
+    const currentLuckDrift = calculateLuckDrift(multiplier);
+    const currentLuck = currentLuckDrift + getLuckMultiplier();
+
+    displayedLuckPercent = Math.round(
+      (1 - Math.exp(-session.generationCount / 50)) * 100,
+    );
+    displayedLuckDrift = currentLuckDrift;
+    displayedLuckDriftPercent = Math.round(currentLuckDrift * 100);
+
+    // 2. Генерируем монстра с этой удачей
+    const monster = getMonsterWithLuck(currentLuck);
     currentMonster = monster;
 
     if (monster) {
       currentSeed = monster.gen;
     }
 
-    // Reset rolling state and bodyparts (will be filled as slots complete)
     isRolling = true;
     currentBodyparts = {};
 
     incrementGeneration();
   }
 
-  // Generate monster from custom seed without animation
   function generateMonsterFromCustomSeed() {
     if (isRolling || !currentSeed.trim()) return;
 
-    // Format the seed
     currentSeed = currentSeed.trim().toUpperCase();
 
-    // Generate monster directly
     const monster = generateMonster(currentSeed);
     currentMonster = monster;
     currentBodyparts = monster.bodyparts;
     isRolling = false;
 
-    // Emit monster via callback prop
     if (onMonsterGenerated) {
       onMonsterGenerated(monster);
     }
@@ -89,29 +119,6 @@
       onMonsterGenerated(currentMonster);
     }
   }
-
-  // Get rarity info for display
-  const rarityInfo = $derived(
-    currentMonster ? getRarityInfo(currentMonster.rarity) : null,
-  );
-
-  // Luck display - use $playerSession for reactive store subscription
-  // The $ prefix automatically subscribes to the store and triggers updates
-  const session = $derived($playerSession);
-  const generationCount = $derived(session.generationCount);
-
-  // Calculate luck multiplier reactively based on generation count
-  function calculateLuckPercent(genCount: number): number {
-    return Math.round((1 - Math.exp(-genCount / 50)) * 100);
-  }
-  const luckPercent = $derived(calculateLuckPercent(session.generationCount));
-
-  // Check if generate button should be shown (hidden for NONEXISTING rarity)
-  const showGenerateButton = $derived(
-    !currentMonster ||
-      currentMonster.rarity !== EmutationRarity.NONEXISTING ||
-      isRolling,
-  );
 </script>
 
 <div class="mutation-window">
@@ -122,8 +129,15 @@
       <MutationCanvas bodyparts={currentBodyparts} size={148} />
     </div>
 
-    <div class="mutation-window__result" style="color: {rarityInfo?.color}">
-      {currentMonster && !isRolling ? generateMonsterName(currentMonster) : "Ожидаем монстрика..."}
+    <div
+      class="mutation-window__result"
+      style="color: {currentMonster && !isRolling
+        ? rarityInfo?.color
+        : 'var(--text)'}"
+    >
+      {currentMonster && !isRolling
+        ? `${generateMonsterName(currentMonster)} ${monsterPrice ? formatPrice(monsterPrice) : ""}`
+        : "Ожидаем монстрика..."}
     </div>
 
     <div class="mutation-window__info">
@@ -161,8 +175,13 @@
       {/if}
 
       {#if generationCount > 0}
-        <div class="mutation-window__luck">
-          ✨ Удача: {luckPercent}%
+        <div
+          class="mutation-window__luck"
+          style="background-color: {luckDriftColor}"
+        >
+          ✨ Удача: {displayedLuckPercent}% ({displayedLuckDrift >= 0
+            ? "+"
+            : "-"}{displayedLuckDriftPercent}%)
         </div>
       {/if}
     </div>
@@ -220,12 +239,6 @@
     gap: 12px;
   }
 
-  .mutation-window__arrow {
-    font-size: 32px;
-    color: #d9d9d9;
-    flex-shrink: 0;
-  }
-
   .mutation-window__seed-container {
     display: flex;
     gap: 12px;
@@ -276,9 +289,9 @@
     font-weight: 600;
     text-align: center;
     padding: 6px 8px;
-    color: #e91e63;
     background: #fce4ec;
     border-radius: 6px;
+    transition: color 0.3s ease;
   }
 
   .mutation-window__absolute-monster-message {
