@@ -78,14 +78,9 @@
   }
 
   function getSlotIsRolling(index: number): boolean {
-    if (!isRolling) return false;
     if (stopSignaledSet.has(index)) return false;
-
-    if (shouldStop(index)) {
-      return false;
-    }
-
-    return true;
+    if (shouldStop(index)) return false;
+    return isRolling;
   }
 
   let stopTimers: ReturnType<typeof setTimeout>[] = [];
@@ -118,19 +113,20 @@
     {#each ROLL_ORDER as part, index}
       <div
         class="mutation-roll__slot-wrapper"
-        data-slot-part-id="{part}"
-        data-slot-done="{completedSet.has(part)}">
+        data-slot-part-id={part}
+        data-slot-done={completedSet.has(part)}
+      >
         <MutationSlot
+          {part}
           label={rollLabels[index]}
           isRolling={getSlotIsRolling(index)}
-          {part}
           finalEmoji={bodyparts[getBodyPartKey(part)]!}
           delay={getDelay(index)}
           onSlotComplete={() => handleSlotStopped(part)}
         />
         <SlotMetadata
-          part={completedSet.has(part) ? part : undefined}
-          emoji={completedSet.has(part)
+          part={completedSet.has(index) ? part : undefined}
+          emoji={completedSet.has(index)
             ? bodyparts[getBodyPartKey(part)]
             : undefined}
         />

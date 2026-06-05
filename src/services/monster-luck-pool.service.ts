@@ -207,8 +207,6 @@ class MonsterPool {
 
     const clampedLuck = Math.max(0, Math.min(1, luck));
 
-    console.log(`Overrandomized luck = ${clampedLuck}`);
-
     // 2. Рассчитываем веса для каждого монстра в пуле.
     // Так как пул уже отсортирован по цене (дешевые в начале, дорогие в конце),
     // мы можем дать первому (самому дешевому) монстру максимальный вес,
@@ -222,9 +220,6 @@ class MonsterPool {
       totalWeight += baseWeight;
       return { entry, baseWeight, index };
     });
-
-    // 3. Сдвиг СГЧ (случайная начальная точка на колесе рулетки)
-    const rngShift = Math.random() * totalWeight;
 
     // 4. Сдвиг Удачи. Чем выше удача, тем больше веса обычных монстров мы "пропускаем".
     // При максимальной удаче (1.0) мы срезаем до 85% общего веса в начале пула,

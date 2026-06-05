@@ -27,8 +27,9 @@
 
   const MAX_SPEED = 25; // Max pixels per frame
   const ACCELERATION = 0.3; // Speed increase per frame
-  const DECELERATION = 0.2; // Speed decrease per frame
+  const DECELERATION = 0.15; // Speed decrease per frame
   const SNAP_SPEED = 1.5; // Speed during final alignment
+  const SNAPPING_FRICTION = 0.05;
 
   type ReelState =
     | "idle"
@@ -140,8 +141,8 @@
           return;
         }
 
-        const step = Math.min(distanceLeft * 0.09, SNAP_SPEED);
-        offsetY += step;
+        speed = distanceLeft * SNAPPING_FRICTION;
+        offsetY += speed;
         break;
     }
 
@@ -168,7 +169,8 @@
   }
 
   function stopSpinning(): void {
-    if (reelState === "loop") {
+    // FIXED - now reel can decelerate even when it is only accelerating
+    if (reelState === "loop" || reelState === "accelerating") {
       reelState = "decelerating";
     }
   }

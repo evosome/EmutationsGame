@@ -36,9 +36,6 @@
   let currentBodyparts = $state<EmutationBodyparts>({});
   let isRolling = $state(false);
 
-  const session = $derived($playerSession);
-  const generationCount = $derived(session.generationCount);
-
   let displayedLuckPercent = $state(0);
   let displayedLuckDrift = $state(0);
   let displayedLuckDriftPercent = $state(0);
@@ -58,14 +55,11 @@
   function generateMonsterWithRoll() {
     if (isRolling) return;
 
-    // calculate luck for THE CURRENT roll
-    const multiplier = 1 - Math.exp(-session.generationCount / 55);
-    const currentLuckDrift = calculateLuckDrift(multiplier);
-    const currentLuck = currentLuckDrift + getLuckMultiplier();
+    const luckMultiplier = getLuckMultiplier();
+    const currentLuckDrift = calculateLuckDrift(luckMultiplier);
+    const currentLuck = currentLuckDrift + luckMultiplier;
 
-    displayedLuckPercent = Math.round(
-      (1 - Math.exp(-session.generationCount / 50)) * 100,
-    );
+    displayedLuckPercent = Math.round(luckMultiplier * 100);
     displayedLuckDrift = currentLuckDrift;
     displayedLuckDriftPercent = Math.round(currentLuckDrift * 100);
 

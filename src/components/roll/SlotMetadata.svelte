@@ -17,10 +17,10 @@
 
   let { part, emoji, isRolling = false }: SlotMetadataProps = $props();
 
-  // Derived values for metadata (only calculated when we have emoji)
-  let rarityColor = $derived(emoji && part ? getEmojiRarityColor(part, emoji) : undefined);
-  let dropChance = $derived(emoji && part ? getEmojiDropChance(part, emoji) : undefined);
-  let price = $derived(emoji && part ? getEmojiPrice(part, emoji) : undefined);
+  //FIXED - cond. was `emoji && part`, so meta data was not available, because HAT value was falsy.
+  let rarityColor = $derived(emoji && part !== undefined ? getEmojiRarityColor(part, emoji) : undefined);
+  let dropChance = $derived(emoji && part !== undefined ? getEmojiDropChance(part, emoji) : undefined);
+  let price = $derived(emoji && part !== undefined ? getEmojiPrice(part, emoji) : undefined);
 </script>
 
 <div class="slot-metadata" class:dimmed={isRolling}>

@@ -9,7 +9,7 @@
 export function calculateLuckDrift(luck: number = 0): number {
   // Calculate the range boundaries
   const minDrift = -luck / 2;
-  const maxDrift = 0.95 - luck;
+  const maxDrift = 0.965 - luck;
   
   // Generate random drift within the range
   const drift = minDrift + Math.random() * (maxDrift - minDrift);
