@@ -1,7 +1,7 @@
-import type { WeightedEmoji } from '$types/index';
-import { EmutationBodypartsEnum } from '$types/bodyparts';
+import type { WeightedEmoji } from "$types/index";
+import { EmutationBodypartsEnum } from "$types/bodyparts";
 
-import emojis from '$assets/emojis.json';
+import emojis from "$assets/emojis.json";
 
 const {
   GARLIC,
@@ -28,8 +28,6 @@ const {
   BURGER,
   RICH,
   DISGUISED,
-  STAR_OF_DAVID,
-  OLD_MAN,
   EXPLODING,
   CHEESE,
   FOX,
@@ -76,6 +74,12 @@ const {
   HEEL,
   BUCKET,
   PROSTHETIC,
+  ROBOT,
+  WING,
+  MECHANICAL_ARM,
+  LION,
+  PIG,
+  NEW_MOON_FACE,
 } = emojis;
 
 /**
@@ -104,6 +108,7 @@ export const HEAD_EMOJIS: WeightedEmoji[] = [
   { emoji: FROG, weight: 100 },
   { emoji: POOP, weight: 100 },
   { emoji: CAT, weight: 100 },
+  { emoji: PIG, weight: 75 },
   { emoji: ZANY, weight: 50 },
   { emoji: COLD, weight: 50 },
   { emoji: SMILING, weight: 50 },
@@ -112,11 +117,12 @@ export const HEAD_EMOJIS: WeightedEmoji[] = [
   { emoji: BURGER, weight: 20 },
   { emoji: RICH, weight: 20 },
   { emoji: DISGUISED, weight: 20 },
-  { emoji: STAR_OF_DAVID, weight: 20 },
-  { emoji: OLD_MAN, weight: 5 },
+  { emoji: LION, weight: 10 },
   { emoji: EXPLODING, weight: 2 },
   { emoji: CHEESE, weight: 2 },
   { emoji: FOX, weight: 1 },
+  { emoji: ROBOT, weight: 1 },
+  { emoji: NEW_MOON_FACE, weight: 1 },
 ];
 
 /**
@@ -168,6 +174,7 @@ export const HAND_EMOJIS: WeightedEmoji[] = [
   { emoji: SLOT_MACHINE, weight: 2 },
   { emoji: DICE, weight: 2 },
   { emoji: SOAP, weight: 2 },
+  { emoji: WING, weight: 1 },
 ];
 
 /**
@@ -181,8 +188,8 @@ export const LEG_EMOJIS: WeightedEmoji[] = [
   { emoji: ICE_CUBE, weight: 5 },
   { emoji: BUCKET, weight: 3 },
   { emoji: PROSTHETIC, weight: 1 },
+  { emoji: MECHANICAL_ARM, weight: 1 },
 ];
-
 
 /**
  * Roll order for the mutation animation
@@ -201,7 +208,9 @@ export const ROLL_ORDER = [
 /**
  * Get emoji pool by body part enum
  */
-export function getEmojiPool(partName: EmutationBodypartsEnum): WeightedEmoji[] {
+export function getEmojiPool(
+  partName: EmutationBodypartsEnum,
+): WeightedEmoji[] {
   switch (partName) {
     case EmutationBodypartsEnum.HAT:
       return HAT_EMOJIS;

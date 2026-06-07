@@ -8,25 +8,75 @@
   "CROWN": { "unicodeSymbol": "👑", "qualifiedName": "crown" },
   "FIRE": { "unicodeSymbol": "🔥", "qualifiedName": "fire" },
   "MOAI": { "unicodeSymbol": "🗿", "qualifiedName": "moai" },
-  "PROFANE": { "unicodeSymbol": "🤬", "name": "сквернослов", "qualifiedName": "profane" },
-  "DEVIL": { "unicodeSymbol": "😈", "name": "чертенок", "qualifiedName": "devil" },
-  "ANGEL": { "unicodeSymbol": "😇", "name": "ангелочек", "qualifiedName": "angel" },
-  "WOLF": { "unicodeSymbol": "🐺", "name": "волчонок", "qualifiedName": "wolf" },
-  "FROG": { "unicodeSymbol": "🐸", "name": "легущька", "qualifiedName": "frog" },
-  "POOP": { "unicodeSymbol": "💩", "name": "какашечка", "qualifiedName": "poop" },
+  "PROFANE": {
+    "unicodeSymbol": "🤬",
+    "name": "сквернослов",
+    "qualifiedName": "profane"
+  },
+  "DEVIL": {
+    "unicodeSymbol": "😈",
+    "name": "чертенок",
+    "qualifiedName": "devil"
+  },
+  "ANGEL": {
+    "unicodeSymbol": "😇",
+    "name": "ангелочек",
+    "qualifiedName": "angel"
+  },
+  "WOLF": {
+    "unicodeSymbol": "🐺",
+    "name": "волчонок",
+    "qualifiedName": "wolf"
+  },
+  "FROG": {
+    "unicodeSymbol": "🐸",
+    "name": "легущька",
+    "qualifiedName": "frog"
+  },
+  "POOP": {
+    "unicodeSymbol": "💩",
+    "name": "какашечка",
+    "qualifiedName": "poop"
+  },
   "CAT": { "unicodeSymbol": "😺", "name": "кит", "qualifiedName": "cat" },
-  "ZANY": { "unicodeSymbol": "🤪", "name": "раздолбай", "qualifiedName": "zany" },
+  "ZANY": {
+    "unicodeSymbol": "🤪",
+    "name": "раздолбай",
+    "qualifiedName": "zany"
+  },
   "COLD": { "unicodeSymbol": "🥶", "name": "ледыш", "qualifiedName": "cold" },
-  "SMILING": { "unicodeSymbol": "😊", "name": "милаш", "qualifiedName": "smiling" },
+  "SMILING": {
+    "unicodeSymbol": "😊",
+    "name": "милаш",
+    "qualifiedName": "smiling"
+  },
   "COOL": { "unicodeSymbol": "😎", "name": "крутыш", "qualifiedName": "cool" },
   "CLOWN": { "unicodeSymbol": "🤡", "name": "клоун", "qualifiedName": "clown" },
-  "BURGER": { "unicodeSymbol": "🍔", "name": "бутерброд", "qualifiedName": "burger" },
-  "RICH": { "unicodeSymbol": "🤑", "name": "миллионерыш", "qualifiedName": "rich" },
-  "DISGUISED": { "unicodeSymbol": "🥸", "name": "энштейныш", "qualifiedName": "disguised" },
-  "STAR_OF_DAVID": { "unicodeSymbol": "✡️", "name": "шалом Израиль", "qualifiedName": "star_of_david" },
-  "OLD_MAN": { "unicodeSymbol": "👨‍🦳", "name": "эпштейныш", "qualifiedName": "old_man" },
-  "EXPLODING": { "unicodeSymbol": "🤯", "name": "отвал башки", "qualifiedName": "exploding" },
-  "CHEESE": { "unicodeSymbol": "🧀", "name": "сырочек", "qualifiedName": "cheese" },
+  "BURGER": {
+    "unicodeSymbol": "🍔",
+    "name": "бутерброд",
+    "qualifiedName": "burger"
+  },
+  "RICH": {
+    "unicodeSymbol": "🤑",
+    "name": "миллионерыш",
+    "qualifiedName": "rich"
+  },
+  "DISGUISED": {
+    "unicodeSymbol": "🥸",
+    "name": "энштейныш",
+    "qualifiedName": "disguised"
+  },
+  "EXPLODING": {
+    "unicodeSymbol": "🤯",
+    "name": "отвал башки",
+    "qualifiedName": "exploding"
+  },
+  "CHEESE": {
+    "unicodeSymbol": "🧀",
+    "name": "сырочек",
+    "qualifiedName": "cheese"
+  },
   "FOX": { "unicodeSymbol": "🦊", "name": "лисёнок", "qualifiedName": "fox" },
   "SAFETY_VEST": { "unicodeSymbol": "🦺", "qualifiedName": "safety_vest" },
   "COAT": { "unicodeSymbol": "🧥", "qualifiedName": "coat" },
@@ -70,5 +120,18 @@
   "BOOT": { "unicodeSymbol": "👢", "qualifiedName": "boot" },
   "HEEL": { "unicodeSymbol": "👠", "qualifiedName": "heel" },
   "BUCKET": { "unicodeSymbol": "🪣", "qualifiedName": "bucket" },
-  "PROSTHETIC": { "unicodeSymbol": "🦿", "qualifiedName": "prosthetic" }
+  "PROSTHETIC": { "unicodeSymbol": "🦿", "qualifiedName": "prosthetic" },
+  "ROBOT": {
+    "unicodeSymbol": "🤖",
+    "name": "мистер робот",
+    "qualifiedName": "robot"
+  },
+  "WING": { "unicodeSymbol": "🪽", "qualifiedName": "wing" },
+  "MECHANICAL_ARM": {
+    "unicodeSymbol": "🦾",
+    "qualifiedName": "mechanical arm"
+  },
+  "LION": { "unicodeSymbol": "🦁", "name": "черемша", "qualifiedName": "lion" },
+  "PIG": { "unicodeSymbol": "🐷", "name": "свинтус", "qualifiedName": "pig" },
+  "NEW_MOON_FACE": { "unicodeSymbol": "🌚", "name": "луныш", "qualifiedName": "new moon face" }
 }
