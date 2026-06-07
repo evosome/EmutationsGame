@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { EmutationBodyparts, Emoji } from '$types/index';
-  import { loadEmojiSVGData, hasEmoji } from '$utils/svg-emoji-loader';
+  import EmojiComponent from '$components/Emoji.svelte';
 
   interface MutationCanvasProps {
     bodyparts: EmutationBodyparts;
@@ -102,11 +102,6 @@
     return positions;
   });
 
-  // Helper to get emoji SVG content
-  function getEmojiSVG(emoji: Emoji): string | null {
-    return loadEmojiSVGData(emoji) || null;
-  }
-
   // Function to get screenshot as data URL (using html2canvas or similar would be needed)
   // For now, we provide a placeholder that indicates this needs a different approach
   function toDataURL(type?: string, quality?: number): string {
@@ -127,38 +122,20 @@
   style="width: {size}px; height: {size}px;"
 >
   {#each positionedEmojis as pos (pos.id)}
-    {@const svgContent = getEmojiSVG(pos.emoji)}
     {@const scaledSize = emojiSize * (pos.scale || 1)}
-    
-    {#if svgContent}
-      <img
-        class="emoji-sprite"
-        style="
-          position: absolute;
-          left: {pos.x - scaledSize / 2}px;
-          top: {pos.y - scaledSize / 2}px;
-          width: {scaledSize}px;
-          height: {scaledSize}px;
-          transform: {pos.flip ? 'scaleX(-1)' : 'none'};
-        "
-        src="{svgContent}"
-        alt="{pos.emoji.unicodeSymbol}"
-      />
-    {:else}
-      <!-- Fallback to native emoji if Twemoji not available -->
-      <span
-        class="emoji-sprite native"
-        style="
-          position: absolute;
-          left: {pos.x}px;
-          top: {pos.y}px;
-          font-size: {scaledSize}px;
-          transform: {pos.flip ? 'scaleX(-1)' : 'none'};
-          text-align: center;
-          line-height: 1;
-        "
-      >{pos.emoji.unicodeSymbol}</span>
-    {/if}
+    <div
+      class="emoji-container"
+      style="
+        position: absolute;
+        left: {pos.x - scaledSize / 2}px;
+        top: {pos.y - scaledSize / 2}px;
+        width: {scaledSize}px;
+        height: {scaledSize}px;
+        transform: {pos.flip ? 'scaleX(-1)' : 'none'};
+      "
+    >
+      <EmojiComponent emoji={pos.emoji} size={scaledSize} class="emoji-sprite" useTwemoji={true} />
+    </div>
   {/each}
 </div>
 
@@ -172,15 +149,9 @@
     display: block;
   }
 
-  .emoji-sprite {
+  .emoji-container {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .emoji-sprite :global(svg) {
-    width: 100%;
-    height: 100%;
-    display: block;
   }
 </style>

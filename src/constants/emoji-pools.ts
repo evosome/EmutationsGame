@@ -175,6 +175,7 @@ export const HAND_EMOJIS: WeightedEmoji[] = [
   { emoji: DICE, weight: 2 },
   { emoji: SOAP, weight: 2 },
   { emoji: WING, weight: 1 },
+  { emoji: MECHANICAL_ARM, weight: 1 },
 ];
 
 /**
@@ -188,7 +189,6 @@ export const LEG_EMOJIS: WeightedEmoji[] = [
   { emoji: ICE_CUBE, weight: 5 },
   { emoji: BUCKET, weight: 3 },
   { emoji: PROSTHETIC, weight: 1 },
-  { emoji: MECHANICAL_ARM, weight: 1 },
 ];
 
 /**

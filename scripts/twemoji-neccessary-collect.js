@@ -66,7 +66,7 @@ const run = () => {
       fs.copyFileSync(sourcePath, targetPath);
       copiedCount++;
     } else {
-      console.warn(`⚠️  Could not find source asset for emoji: ${emoji} (Tried: ${strictFilename} & ${strippedFilename})`);
+      console.warn(`⚠️  Could not find source asset for emoji: ${emoji.unicodeSymbol} (Tried: ${strictFilename} & ${strippedFilename})`);
       missingCount++;
     }
   });

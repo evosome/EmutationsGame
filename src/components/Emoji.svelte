@@ -37,9 +37,9 @@
 {:else}
   <span
     class="emoji native {className}"
-    data-emoji={emoji}
+    data-emoji={emoji.unicodeSymbol}
     style="display: inline-block; font-size: {sizeValue}; line-height: 1;"
-    >{emoji}</span
+    >{emoji.unicodeSymbol}</span
   >
 {/if}
 
