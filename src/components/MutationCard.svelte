@@ -4,7 +4,7 @@
 
   import { calculateDropChance } from "$services/drop.service";
   import { calculatePrice } from "$services/price.service";
-  import type { EmutationMonster } from "$types/index";
+  import type { MutationInfo } from "$types/index";
   import {
     formatDropChance,
     formatPrice,
@@ -13,18 +13,23 @@
   } from "$utils/formatting";
 
   interface MutationCardProps {
-    monster: EmutationMonster;
+    mutationInfo: MutationInfo;
     showCopyButton?: boolean;
   }
 
-  let { monster, showCopyButton = false }: MutationCardProps = $props();
+  let {
+    mutationInfo,
+    showCopyButton = false,
+  }: MutationCardProps = $props();
 
+  const monster = $derived(mutationInfo.monster);
   const name = $derived(generateMonsterName(monster));
   const rarityInfo = $derived(getRarityInfo(monster.rarity));
   const dropChance = $derived(calculateDropChance(monster.bodyparts));
   const formattedChance = $derived(formatDropChance(dropChance));
   const price = $derived(calculatePrice(monster.bodyparts));
   const formattedPrice = $derived(formatPrice(price));
+  const formattedAccompLuck = $derived(formatDropChance(mutationInfo.accompanyingLuck));
 
   let canvasComponent: {
     toDataURL: () => string;
@@ -70,8 +75,11 @@
 
     <div class="mutation-card__info">
       <div class="mutation-card__stats">
-        <div class="mutation-card__price" style="color: {rarityInfo.color}">
-          Цена: {formattedPrice}
+        <div class="mutation-card__stat" style="color: {rarityInfo.color}">
+          Очки: {formattedPrice}
+        </div>
+        <div class="mutation-card__stat" style="color: {rarityInfo.color}">
+          Сопут. удача: {formattedAccompLuck}
         </div>
       </div>
       <GenField value={monster.gen} />
@@ -124,6 +132,10 @@
     display: flex;
     gap: 12px;
     align-items: center;
+  }
+
+  .mutation-card__stat {
+    font-size: 9px;
   }
 
   .mutation-card__copy {

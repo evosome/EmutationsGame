@@ -16,7 +16,7 @@
     playerSession,
   } from "$stores/session-store";
   import { getBodyPartKey } from "$types/bodyparts";
-  import type { EmutationBodyparts, EmutationMonster } from "$types/index";
+  import type { EmutationBodyparts, EmutationMonster, MutationInfo } from "$types/index";
   import { EmutationRarity } from "$types/index";
   import {
     formatPrice,
@@ -26,7 +26,7 @@
   } from "$utils/formatting";
 
   interface MutationWindowProps {
-    onMonsterGenerated?: (monster: EmutationMonster) => void;
+    onMonsterGenerated?: (mutationInfo: MutationInfo) => void;
   }
 
   let { onMonsterGenerated }: MutationWindowProps = $props();
@@ -35,6 +35,7 @@
   let currentMonster = $state<EmutationMonster | null>(null);
   let currentBodyparts = $state<EmutationBodyparts>({});
   let isRolling = $state(false);
+  let currentMutationInfo = $state<MutationInfo | null>(null);
 
   let displayedLuckPercent = $state(0);
   let displayedLuckDrift = $state(0);
@@ -69,6 +70,12 @@
 
     if (monster) {
       currentSeed = monster.gen;
+      // Create MutationInfo with the monster, accompanying luck, and luck drift
+      currentMutationInfo = {
+        monster,
+        accompanyingLuck: currentLuck,
+        luckDrift: currentLuckDrift,
+      };
     }
 
     isRolling = true;
@@ -87,8 +94,17 @@
     currentBodyparts = monster.bodyparts;
     isRolling = false;
 
-    if (onMonsterGenerated) {
-      onMonsterGenerated(monster);
+    if (monster) {
+      // For custom seed generation, we don't have luck context
+      currentMutationInfo = {
+        monster,
+        accompanyingLuck: 0,
+        luckDrift: 0,
+      };
+    }
+
+    if (onMonsterGenerated && currentMutationInfo) {
+      onMonsterGenerated(currentMutationInfo);
     }
   }
 
@@ -109,8 +125,8 @@
     isRolling = false;
 
     // Emit monster via callback prop (parent will handle NONEXISTING effect)
-    if (currentMonster && onMonsterGenerated) {
-      onMonsterGenerated(currentMonster);
+    if (currentMutationInfo && onMonsterGenerated) {
+      onMonsterGenerated(currentMutationInfo);
     }
   }
 </script>

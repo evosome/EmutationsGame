@@ -1,12 +1,12 @@
 <script lang="ts">
   import "./styles/colors.css";
 
-  import type { EmutationMonster } from "$types/index";
+  import type { EmutationMonster, MutationInfo } from "$types/index";
   import { EmutationRarity } from "$types/index";
   import MutationHistory from "./components/MutationHistory.svelte";
   import MutationWindow from "./components/MutationWindow.svelte";
 
-  let monsters = $state<EmutationMonster[]>([]);
+  let mutations = $state<MutationInfo[]>([]);
   let isAbsoluteMonster = $state(false);
   const maxHistory = 6;
   const ABSOLUTE_MONSTER_TITLE = "Вы создали абсолютного монстрика!";
@@ -22,12 +22,12 @@
   });
 
   // Handle monster generated event from MutationWindow via callback prop
-  function handleMonsterGenerated(monster: EmutationMonster) {
+  function handleMonsterGenerated(mutation: MutationInfo) {
     // Add to history (at the beginning)
-    monsters = [monster, ...monsters].slice(0, maxHistory);
+    mutations = [mutation, ...mutations].slice(0, maxHistory);
 
     // Check for NONEXISTING rarity - trigger absolute monster effect
-    if (monster.rarity === EmutationRarity.NONEXISTING) {
+    if (mutation.monster.rarity === EmutationRarity.NONEXISTING) {
       triggerAbsoluteMonsterEffect();
     }
   }
@@ -50,7 +50,7 @@
     </section>
 
     <section class="app__history-section">
-      <MutationHistory {monsters} />
+      <MutationHistory {mutations} />
     </section>
   </div>
 </main>
