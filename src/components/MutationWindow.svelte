@@ -136,7 +136,7 @@
 
   <div class="mutation-window__content">
     <div class="mutation-window__canvas-container">
-      <MutationCanvas bodyparts={currentBodyparts} size={148} />
+      <MutationCanvas bodyparts={currentBodyparts} />
     </div>
 
     <div

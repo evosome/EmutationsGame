@@ -7,7 +7,7 @@
     size?: number;
   }
 
-  let { bodyparts, size = 148 }: MutationCanvasProps = $props();
+  let { bodyparts, size = 96 }: MutationCanvasProps = $props();
 
   // Calculate emoji size based on canvas size
   const emojiSize = Math.floor(size / 5);
@@ -142,9 +142,6 @@
 <style>
   .mutation-canvas {
     position: relative;
-    background-color: #ffffff;
-    border: 1px solid #d9d9d9;
-    border-radius: 16px;
     overflow: hidden;
     display: block;
   }
