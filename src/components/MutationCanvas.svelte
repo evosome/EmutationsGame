@@ -23,16 +23,18 @@
 
   // Get positioned emojis for the monster
   const positionedEmojis = $derived.by(() => {
-    const center = size / 2;
     const positions: EmojiPosition[] = [];
     let index = 0;
+
+    const center = size / 2;
+    const yCenter = size / 2 - emojiSize / 2;
 
     // Hat (top center, above head)
     if (bodyparts.hat) {
       positions.push({
         emoji: bodyparts.hat,
         x: center,
-        y: center - emojiSize,
+        y: yCenter - emojiSize,
         id: `hat-${index++}`
       });
     }
@@ -42,7 +44,7 @@
       positions.push({
         emoji: bodyparts.head,
         x: center,
-        y: center,
+        y: yCenter,
         id: `head-${index++}`
       });
     }
@@ -52,7 +54,7 @@
       positions.push({
         emoji: bodyparts.body,
         x: center,
-        y: center + emojiSize,
+        y: yCenter + emojiSize,
         id: `body-${index++}`
       });
     }
@@ -62,7 +64,7 @@
       positions.push({
         emoji: bodyparts.leftHand,
         x: center - emojiSize,
-        y: center + emojiSize,
+        y: yCenter + emojiSize,
         flip: true,
         id: `leftHand-${index++}`
       });
@@ -73,7 +75,7 @@
       positions.push({
         emoji: bodyparts.rightHand,
         x: center + emojiSize,
-        y: center + emojiSize,
+        y: yCenter + emojiSize,
         id: `rightHand-${index++}`
       });
     }
@@ -83,7 +85,7 @@
       positions.push({
         emoji: bodyparts.leftLeg,
         x: center - emojiSize + (emojiSize / 2),
-        y: center + 2 * emojiSize,
+        y: yCenter + 2 * emojiSize,
         flip: true,
         id: `leftLeg-${index++}`
       });
@@ -94,7 +96,7 @@
       positions.push({
         emoji: bodyparts.rightLeg,
         x: center + emojiSize - (emojiSize / 2),
-        y: center + 2 * emojiSize,
+        y: yCenter + 2 * emojiSize,
         id: `rightLeg-${index++}`
       });
     }

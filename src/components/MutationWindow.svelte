@@ -1,6 +1,6 @@
 <script lang="ts">
   import GenField from "./GenField.svelte";
-  import MutationCanvas from "./MutationCanvas.svelte";
+  import { StasisChamber } from "$components/stasis-chamber/index";
   import { MutationRoll } from "./roll/index";
 
   import { ROLL_ORDER } from "$constants/emoji-pools";
@@ -136,7 +136,9 @@
 
   <div class="mutation-window__content">
     <div class="mutation-window__canvas-container">
-      <MutationCanvas bodyparts={currentBodyparts} />
+      <StasisChamber
+        bodyparts={currentBodyparts}
+        rarity={!isRolling ? currentMonster?.rarity : undefined} />
     </div>
 
     <div

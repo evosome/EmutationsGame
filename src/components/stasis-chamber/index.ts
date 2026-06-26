@@ -1,0 +1,1 @@
+export { default as StasisChamber } from './StasisChamber.svelte';

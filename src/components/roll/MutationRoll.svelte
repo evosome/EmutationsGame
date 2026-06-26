@@ -104,8 +104,6 @@
       stopTimers = [];
     };
   });
-
-  $inspect(completedSet);
 </script>
 
 <div class="mutation-roll">
