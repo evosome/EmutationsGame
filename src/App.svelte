@@ -3,8 +3,8 @@
 
   import type { EmutationMonster, MutationInfo } from "$types/index";
   import { EmutationRarity } from "$types/index";
-  import MutationHistory from "./components/MutationHistory.svelte";
-  import MutationWindow from "./components/MutationWindow.svelte";
+  import { MutationHistory } from "./components/mutation-history";
+  import { MutationWindow } from "./components/mutation-window";
 
   let mutations = $state<MutationInfo[]>([]);
   let isAbsoluteMonster = $state(false);

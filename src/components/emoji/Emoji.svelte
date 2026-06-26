@@ -9,8 +9,8 @@
   interface EmojiProps {
     emoji: Emoji;
     size: number;
-    class: string;
-    useTwemoji: boolean;
+    class?: string;
+    useTwemoji?: boolean;
   }
 
   let {

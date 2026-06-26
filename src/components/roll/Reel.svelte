@@ -4,7 +4,7 @@
   import type { Emoji } from "$types/emoji";
   import { getEmojiRarityColor } from "$utils/emoji-roll";
   import { untrack } from "svelte";
-  import EmojiComponent from "$components/Emoji.svelte";
+  import { Emoji as EmojiComponent } from "$components/emoji";
 
   // Props
   let props: {
