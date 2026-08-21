@@ -1,10 +1,8 @@
 <script lang="ts">
   import type { Emoji } from "$types/index";
-  import {
-    loadEmojiSVGData,
-    hasEmoji,
-    getHexCode,
-  } from "$utils/svg-emoji-loader";
+  import { loadEmojiSVGData, hasEmoji } from "$utils/svg-emoji-loader";
+
+  const COMMON_EMOJI_SIZE = 24;
 
   interface EmojiProps {
     emoji: Emoji;
@@ -15,13 +13,15 @@
 
   let {
     emoji,
-    size = 24,
+    size = COMMON_EMOJI_SIZE,
     class: className = "",
     useTwemoji = true,
   }: EmojiProps = $props();
 
   const shouldUseTwemoji = $derived(useTwemoji && hasEmoji(emoji));
-  const svgContent = $derived(shouldUseTwemoji ? loadEmojiSVGData(emoji) : null);
+  const svgContent = $derived(
+    shouldUseTwemoji ? loadEmojiSVGData(emoji) : null,
+  );
 
   const sizeValue = $derived(typeof size === "number" ? `${size}px` : size);
 </script>

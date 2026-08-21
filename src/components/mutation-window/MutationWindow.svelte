@@ -13,10 +13,13 @@
   import {
     getLuckMultiplier,
     incrementGeneration,
-    playerSession,
   } from "$stores/session-store";
   import { getBodyPartKey } from "$types/bodyparts";
-  import type { EmutationBodyparts, EmutationMonster, MutationInfo } from "$types/index";
+  import type {
+    EmutationBodyparts,
+    EmutationMonster,
+    MutationInfo,
+  } from "$types/index";
   import { EmutationRarity } from "$types/index";
   import {
     formatPrice,

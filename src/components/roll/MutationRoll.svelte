@@ -5,20 +5,6 @@
   import MutationSlot from "./MutationSlot.svelte";
   import SlotMetadata from "./SlotMetadata.svelte";
 
-  interface MutationRollProps {
-    bodyparts: EmutationBodyparts;
-    isRolling: boolean;
-    onSlotComplete?: (index: number) => void;
-    onRollComplete?: () => void;
-  }
-
-  let {
-    bodyparts = {},
-    isRolling = false,
-    onSlotComplete,
-    onRollComplete,
-  }: MutationRollProps = $props();
-
   const rollLabels = [
     "Голова",
     "Тело",
@@ -36,6 +22,20 @@
   // and state `isRolling` of cell changes to false from interval call,
   // it causes infinite rolling of the slowly accelerated cell.
   const MIN_SPIN_DURATION = 2000;
+
+  interface MutationRollProps {
+    bodyparts: EmutationBodyparts;
+    isRolling: boolean;
+    onSlotComplete?: (index: number) => void;
+    onRollComplete?: () => void;
+  }
+
+  let {
+    bodyparts = {},
+    isRolling = false,
+    onSlotComplete,
+    onRollComplete,
+  }: MutationRollProps = $props();
 
   let completedSet = $state<Set<number>>(new Set());
   let hasFiredRollComplete = $state(false);

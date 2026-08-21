@@ -6,15 +6,6 @@
   import { untrack } from "svelte";
   import { Emoji as EmojiComponent } from "$components/emoji";
 
-  // Props
-  let props: {
-    isSpinning: boolean;
-    targetEmoji: Emoji;
-    delay: number;
-    part: EmutationBodypartsEnum;
-    onReelComplete?: () => void;
-  } = $props();
-
   const VISIBLE_CELLS = 5; // Always 5 cells in DOM
   const CELL_HEIGHT = 48; // Height of one cell in pixels
   const TOTAL_HEIGHT = VISIBLE_CELLS * CELL_HEIGHT;
@@ -44,6 +35,14 @@
     id: number;
     emoji?: Emoji;
   }
+
+  let props: {
+    isSpinning: boolean;
+    targetEmoji: Emoji;
+    delay: number;
+    part: EmutationBodypartsEnum;
+    onReelComplete?: () => void;
+  } = $props();
 
   let reelState = $state<ReelState>("idle");
   let cells = $state<Array<CellInfo>>([]);

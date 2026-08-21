@@ -5,6 +5,8 @@ import { generate, hashSeed } from '$utils/random';
 import { calculateRarity } from './rarity.service';
 import { calculateQuality } from './quality.service';
 
+const MONSTER_NAME_PLACEHOLDER = 'monster';
+
 /**
  * Select a random emoji from a weighted pool using a seeded RNG
  */
@@ -45,7 +47,7 @@ export function generateMonster(seed: string): EmutationMonster {
 
   // Base name comes from the head emoji's name
   const headEmoji = bodyparts.head;
-  const baseName = headEmoji?.name || 'монстрик';
+  const baseName = headEmoji?.name || MONSTER_NAME_PLACEHOLDER;
 
   return {
     gen: seed,
