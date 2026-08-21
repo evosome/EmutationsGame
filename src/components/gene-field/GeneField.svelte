@@ -1,12 +1,18 @@
 <script lang="ts">
-  import { formatSeed } from '$utils/index';
+  import { formatSeed } from "$utils/index";
+
+  const MAX_GENE_LENGHT = 15;
+  const COMMON_GENE_PLACEHOLDER = "XXX-XXX-XXX-XXX";
 
   interface GenFieldProps {
     placeholder?: string;
     value?: string;
   }
 
-  let { placeholder = 'XXX-XXX-XXX-XXX', value = $bindable('') }: GenFieldProps = $props();
+  let {
+    placeholder = COMMON_GENE_PLACEHOLDER,
+    value = $bindable(""),
+  }: GenFieldProps = $props();
   let input: HTMLInputElement;
 
   function handleInput() {
@@ -32,7 +38,7 @@
     class="gen-field__input"
     {placeholder}
     oninput={handleInput}
-    maxlength="15"
+    maxlength={MAX_GENE_LENGHT}
   />
 </div>
 
@@ -44,7 +50,7 @@
   }
 
   .gen-field__input {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     font-size: 16px;
     padding: 8px 12px;
     border: 1px solid #d9d9d9;

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { EmutationBodyparts, Emoji } from '$types/index';
-  import EmojiComponent from '$components/Emoji.svelte';
+  import type { EmutationBodyparts, Emoji } from "$types/index";
+  import { Emoji as EmojiComponent } from "$components/emoji";
 
   interface MutationCanvasProps {
     bodyparts: EmutationBodyparts;
@@ -33,7 +33,7 @@
         emoji: bodyparts.hat,
         x: center,
         y: center - emojiSize,
-        id: `hat-${index++}`
+        id: `hat-${index++}`,
       });
     }
 
@@ -43,7 +43,7 @@
         emoji: bodyparts.head,
         x: center,
         y: center,
-        id: `head-${index++}`
+        id: `head-${index++}`,
       });
     }
 
@@ -53,7 +53,7 @@
         emoji: bodyparts.body,
         x: center,
         y: center + emojiSize,
-        id: `body-${index++}`
+        id: `body-${index++}`,
       });
     }
 
@@ -64,7 +64,7 @@
         x: center - emojiSize,
         y: center + emojiSize,
         flip: true,
-        id: `leftHand-${index++}`
+        id: `leftHand-${index++}`,
       });
     }
 
@@ -74,7 +74,7 @@
         emoji: bodyparts.rightHand,
         x: center + emojiSize,
         y: center + emojiSize,
-        id: `rightHand-${index++}`
+        id: `rightHand-${index++}`,
       });
     }
 
@@ -82,10 +82,10 @@
     if (bodyparts.leftLeg) {
       positions.push({
         emoji: bodyparts.leftLeg,
-        x: center - emojiSize + (emojiSize / 2),
+        x: center - emojiSize + emojiSize / 2,
         y: center + 2 * emojiSize,
         flip: true,
-        id: `leftLeg-${index++}`
+        id: `leftLeg-${index++}`,
       });
     }
 
@@ -93,9 +93,9 @@
     if (bodyparts.rightLeg) {
       positions.push({
         emoji: bodyparts.rightLeg,
-        x: center + emojiSize - (emojiSize / 2),
+        x: center + emojiSize - emojiSize / 2,
         y: center + 2 * emojiSize,
-        id: `rightLeg-${index++}`
+        id: `rightLeg-${index++}`,
       });
     }
 
@@ -105,22 +105,21 @@
   // Function to get screenshot as data URL (using html2canvas or similar would be needed)
   // For now, we provide a placeholder that indicates this needs a different approach
   function toDataURL(type?: string, quality?: number): string {
-    console.warn('toDataURL with Twemoji requires html2canvas or similar library');
-    return '';
+    console.warn(
+      "toDataURL with Twemoji requires html2canvas or similar library",
+    );
+    return "";
   }
 
   async function toBlob(type?: string, quality?: number): Promise<Blob | null> {
-    console.warn('toBlob with Twemoji requires html2canvas or similar library');
+    console.warn("toBlob with Twemoji requires html2canvas or similar library");
     return null;
   }
 
   export { toDataURL, toBlob };
 </script>
 
-<div
-  class="mutation-canvas"
-  style="width: {size}px; height: {size}px;"
->
+<div class="mutation-canvas" style="width: {size}px; height: {size}px;">
   {#each positionedEmojis as pos (pos.id)}
     {@const scaledSize = emojiSize * (pos.scale || 1)}
     <div
@@ -134,7 +133,12 @@
         transform: {pos.flip ? 'scaleX(-1)' : 'none'};
       "
     >
-      <EmojiComponent emoji={pos.emoji} size={scaledSize} class="emoji-sprite" useTwemoji={true} />
+      <EmojiComponent
+        emoji={pos.emoji}
+        size={scaledSize}
+        class="emoji-sprite"
+        useTwemoji={true}
+      />
     </div>
   {/each}
 </div>

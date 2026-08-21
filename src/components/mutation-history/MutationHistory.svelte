@@ -1,15 +1,17 @@
 <script lang="ts">
-  import type { MutationInfo } from '$types/index';
-  import MutationCard from './MutationCard.svelte';
+  import type { MutationInfo } from "$types/index";
+  import MutationCard from "./MutationCard.svelte";
+
+  const MAX_HISTORY_ITEMS = 6;
 
   interface MutationHistoryProps {
     mutations?: MutationInfo[];
     maxItems?: number;
   }
 
-  let { mutations = [], maxItems = 6 }: MutationHistoryProps = $props();
+  let { mutations = [], maxItems = MAX_HISTORY_ITEMS }: MutationHistoryProps =
+    $props();
   const limitedMonsters = $derived(mutations.slice(0, maxItems));
-
 </script>
 
 <div class="mutation-history">
@@ -22,7 +24,7 @@
       </div>
     {:else}
       {#each limitedMonsters as mutationInfo}
-        <MutationCard mutationInfo={mutationInfo} showCopyButton />
+        <MutationCard {mutationInfo} showCopyButton />
       {/each}
     {/if}
   </div>

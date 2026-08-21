@@ -1,7 +1,7 @@
 <script lang="ts">
-  import GenField from "./GenField.svelte";
-  import MutationCanvas from "./MutationCanvas.svelte";
-  import { MutationRoll } from "./roll/index";
+  import { GeneField } from "$components/gene-field";
+  import { MutationRoll } from "$components/roll";
+  import { MutationCanvas } from "$components/mutation-canvas";
 
   import { ROLL_ORDER } from "$constants/emoji-pools";
   import {
@@ -13,10 +13,13 @@
   import {
     getLuckMultiplier,
     incrementGeneration,
-    playerSession,
   } from "$stores/session-store";
   import { getBodyPartKey } from "$types/bodyparts";
-  import type { EmutationBodyparts, EmutationMonster, MutationInfo } from "$types/index";
+  import type {
+    EmutationBodyparts,
+    EmutationMonster,
+    MutationInfo,
+  } from "$types/index";
   import { EmutationRarity } from "$types/index";
   import {
     formatPrice,
@@ -185,7 +188,7 @@
             </button>
           </div>
           <div class="seed-container__seed-view">
-            <GenField bind:value={currentSeed} />
+            <GeneField bind:value={currentSeed} />
             <button
               class="mutation-window__button mutation-window__button--secondary"
               onclick={generateMonsterFromCustomSeed}

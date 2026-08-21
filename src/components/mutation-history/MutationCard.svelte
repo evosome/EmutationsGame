@@ -1,6 +1,6 @@
 <script lang="ts">
-  import GenField from "./GenField.svelte";
-  import MutationCanvas from "./MutationCanvas.svelte";
+  import { GeneField } from "$components/gene-field";
+  import { MutationCanvas } from "$components/mutation-canvas";
 
   import { calculateDropChance } from "$services/drop.service";
   import { calculatePrice } from "$services/price.service";
@@ -82,7 +82,7 @@
           Сопут. удача: {formattedAccompLuck}
         </div>
       </div>
-      <GenField value={monster.gen} />
+      <GeneField value={monster.gen} />
       {#if showCopyButton}
         <button class="mutation-card__copy" onclick={copyScreenshot}>
           📋

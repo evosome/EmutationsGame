@@ -4,16 +4,7 @@
   import type { Emoji } from "$types/emoji";
   import { getEmojiRarityColor } from "$utils/emoji-roll";
   import { untrack } from "svelte";
-  import EmojiComponent from "$components/Emoji.svelte";
-
-  // Props
-  let props: {
-    isSpinning: boolean;
-    targetEmoji: Emoji;
-    delay: number;
-    part: EmutationBodypartsEnum;
-    onReelComplete?: () => void;
-  } = $props();
+  import { Emoji as EmojiComponent } from "$components/emoji";
 
   const VISIBLE_CELLS = 5; // Always 5 cells in DOM
   const CELL_HEIGHT = 48; // Height of one cell in pixels
@@ -44,6 +35,14 @@
     id: number;
     emoji?: Emoji;
   }
+
+  let props: {
+    isSpinning: boolean;
+    targetEmoji: Emoji;
+    delay: number;
+    part: EmutationBodypartsEnum;
+    onReelComplete?: () => void;
+  } = $props();
 
   let reelState = $state<ReelState>("idle");
   let cells = $state<Array<CellInfo>>([]);

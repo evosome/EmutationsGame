@@ -7,6 +7,7 @@
     "types": ["svelte", "vite/client"],
     "noEmit": true,
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "$lib/*": ["src/lib/*"],
       "$types/*": ["src/types/*"],
@@ -15,7 +16,7 @@
       "$constants/*": ["src/constants/*"],
       "$services/*": ["src/services/*"],
       "$assets/*": ["src/assets/*"],
-      "$components": ["src/components/*"]
+      "$components/*": ["src/components/*"]
     },
     /**
      * Typecheck JS in `.svelte` and `.js` files by default.
